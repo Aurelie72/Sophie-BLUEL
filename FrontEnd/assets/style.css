@@ -30,9 +30,12 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
-ol, ul {
+ol, ul, a {
 	list-style: none;
+	color: black;
+	text-decoration: none;
 }
 blockquote, q {
 	quotes: none;
@@ -121,6 +124,33 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+/* Ajout css bouttons :  */
+
+#portfolio .buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+	height: 37px;
+	padding: 50px 0 50px 0;
+}
+#portfolio .buttons #tous{
+	background-color: #1D6154;
+	color: white;
+}
+
+#portfolio .buttons button{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #1D6154;
+	background-color: white;
+	border: 2px solid #1D6154;
+	text-align: center;
+	border-radius: 60px ;
+	padding: 10px;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -137,36 +167,51 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#contact{
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+
+#login{
+	padding-top: 100px;
+	width: 379px;
+	margin: auto;
+	height: 1024px;
+}
+
+#contact,
+#login > * {
 	text-align: center;
 
 }
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form {
+form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
+
 }
 
-#contact input {
+input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-#contact label {
+	}
+label {
 	margin: 2em 0 1em 0;
+	display: flex;
+	justify-content: flex-start;
+	
 }
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+ 	resize: none;
+	/* pour eviter dagrandir la zone  */
 }
 
 input[type="submit"]{
