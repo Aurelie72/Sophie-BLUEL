@@ -35,25 +35,10 @@
 // });
 
 async function init() {
+  const categories = await fetch("http://localhost:5678/api/categories").then(response => response.json());
   const works = await fetch("http://localhost:5678/api/works").then(response => response.json());
   
-  
-  // GENERER tous les BOUTONS DYNAMIQUEMENT 
-
-  // const divBouttons = document.querySelector(".buttons");
-  //   function genererBoutons (){
-  //           for (let i= 0; i < works.length; i++) {
-      
-  //           const work = works[i];
-      
-  //             const bouton = document.createElement("button");
-  //             bouton.textContent = work.category.name; 
-  //             divBouttons.appendChild(bouton);
-  //     }
-  //   }
-  //   genererBoutons();
-
-      // GENERER les BOUTONS DYNAMIQUEMENT sans doublons // revoir
+        // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
 
   const divBouttons = document.querySelector(".buttons");
     function genererBoutons (){
@@ -64,26 +49,44 @@ const buttonTous = document.createElement("button");
               buttonTous.id = "tous";
               divBouttons.appendChild(buttonTous);
 
-            for (let i= 0; i < 3; i++) {
-      // i<3 à revoir meilleure solution ?
-            const work = works[i];
+            for (let i= 0; i < categories.length; i++) {
+            const categorie = categories[i];
       
               const bouton = document.createElement("button");
-              bouton.textContent = work.category.name; 
+              bouton.textContent = categorie.name; 
 
-    if (work.category.name === "Objets") {
+    if (categorie.name === "Objets") {
       bouton.id = "objets";
     }
-    else if (work.category.name === "Appartements") {
+    else if (categorie.name === "Appartements") {
       bouton.id = "appartements";
     }
-    else if (work.category.name === "Hotels & restaurants") {
+    else if (categorie.name === "Hotels & restaurants") {
       bouton.id = "hotelsrest";
     }
               divBouttons.appendChild(bouton);       
       }
     }
     genererBoutons();
+
+    //             const work = works[i];
+      
+    //           const bouton = document.createElement("button");
+    //           bouton.textContent = work.category.name; 
+
+    // if (work.category.name === "Objets") {
+    //   bouton.id = "objets";
+    // }
+    // else if (work.category.name === "Appartements") {
+    //   bouton.id = "appartements";
+    // }
+    // else if (work.category.name === "Hotels & restaurants") {
+    //   bouton.id = "hotelsrest";
+    // }
+    //           divBouttons.appendChild(bouton);       
+    //   }
+    // }
+    // genererBoutons();
     
     
     
