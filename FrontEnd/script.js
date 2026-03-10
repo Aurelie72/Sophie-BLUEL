@@ -34,9 +34,13 @@
 //   console.log(workfilter);
 // });
 
+let urlCategories = "http://localhost:5678/api/categories"
+let urlWorks = "http://localhost:5678/api/works"
+
+
 async function init() {
-  const categories = await fetch("http://localhost:5678/api/categories").then(response => response.json());
-  const works = await fetch("http://localhost:5678/api/works").then(response => response.json());
+  const categories = await fetch(urlCategories).then(response => response.json());
+  const works = await fetch(urlWorks).then(response => response.json());
   
         // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
 
@@ -49,11 +53,17 @@ const buttonTous = document.createElement("button");
               buttonTous.id = "tous";
               divBouttons.appendChild(buttonTous);
 
-            for (let i= 0; i < categories.length; i++) {
-            const categorie = categories[i];
+    // Creation des autres boutons via categories :
+            // for (let i= 0; i < categories.length; i++) {
+            // const categorie = categories[i];
       
-              const bouton = document.createElement("button");
-              bouton.textContent = categorie.name; 
+            //   const bouton = document.createElement("button");
+            //   bouton.textContent = categorie.name; 
+              
+              // ou 
+              categories.forEach(categorie => {
+  const bouton = document.createElement("button");
+  bouton.textContent = categorie.name;
 
     if (categorie.name === "Objets") {
       bouton.id = "objets";
@@ -65,10 +75,12 @@ const buttonTous = document.createElement("button");
       bouton.id = "hotelsrest";
     }
               divBouttons.appendChild(bouton);       
-      }
+      });
     }
     genererBoutons();
 
+    // creation categorie a partir de works : erreur 
+  // for (let i= 0; i < 3; i++) {
     //             const work = works[i];
       
     //           const bouton = document.createElement("button");
@@ -111,11 +123,30 @@ gallery.innerHTML = "";
           figure.appendChild(titleElement); 
         }
     }
-    genererWorks(works);
 
+    // avec innerHTML : 
+//     genererWorks(works);
 
-
-
+//     function genererWorks(works) {
+//   gallery.innerHTML = works.map(work => 
+// map prend une fonction qui reçoit chaque élément du tableau (work)
+                        // et doit retourner quelque chose (ici, une string HTML).
+                        // Donc :
+                        // work = un élément du tableau works
+                        // => = “retourne”
+                        // la string entre backticks = ce que tu veux générer pour chaque élément`
+  //  <figure>
+  // //  <img src="${work.imageUrl}" alt="${work.title}">
+  //    <figcaption>${work.title}</figcaption>
+  //  </figure>
+  //  `).join("");               
+                        // join sert à coller les éléments d’un tableau en une seule string.
+                        // Tu choisis ce que tu mets entre chaque élément :
+                        // join("") → rien entre les éléments
+                        // join(",") → une virgule
+                        // join("\n") → un retour à la ligne
+// }
+// genererWorks(works);
   
 
     // FILTRES 
@@ -176,3 +207,80 @@ gallery.innerHTML = "";
 // buttonTous.addEventListener("click", () => filtrer("Tous"));
 // }
 //     init();
+
+
+
+
+// LOGIN 
+
+export function formulaireLogIn() {
+
+   const logIn = document.querySelector("#login");
+   logIn.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  
+  const emailValue = document.querySelector("#email").value
+  const passwordValue = document.querySelector("#password").value
+
+
+fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    // Cet objet avis doit être converti en une chaîne de caractères au format JSON pour être transmis dans le body de la requête. Nous appelons donc la fonction JSON.stringify : 
+    body: JSON.stringify({
+    email: emailValue,
+    password: passwordValue
+    })
+  });
+ });
+}
+formulaireLogIn()
+
+
+
+
+// corrigé : 
+export function formulaireLogIn() {
+
+  const logIn = document.querySelector("#login");
+
+  logIn.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const emailValue = document.querySelector("#email").value;
+    const passwordValue = document.querySelector("#password").value;
+
+    try {
+      const response = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailValue,
+          password: passwordValue
+        })
+      });
+
+      // const data = await response.json();
+
+    //   if (response.ok) {
+    //     // Stocker le token
+    //     localStorage.setItem("token", data.token);
+
+    //     // Redirection vers l'accueil
+    //     window.location.href = "index.html";
+    //   } else {
+    //     document.querySelector(".error-message").textContent =
+    //       "Email ou mot de passe incorrect";
+    //   }
+
+    // } catch (error) {
+    //   console.error(error);
+    //   document.querySelector(".error-message").textContent =
+    //     "Une erreur est survenue.";
+    }
+  });
+}
+
+formulaireLogIn();
+
