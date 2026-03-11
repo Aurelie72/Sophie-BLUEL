@@ -231,3 +231,15 @@ footer nav ul {
 	margin: 2em
 }
 
+/* Ajout message d'erreur sur login.html:  */
+.error-message {
+  color: red;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+
+/* a revoir  */
+form p:firstchild{
+	text-decoration: underline;
+}

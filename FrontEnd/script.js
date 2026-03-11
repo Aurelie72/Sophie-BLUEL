@@ -36,6 +36,7 @@
 
 let urlCategories = "http://localhost:5678/api/categories"
 let urlWorks = "http://localhost:5678/api/works"
+let urlLogin = "http://localhost:5678/api/users/login"
 
 
 async function init() {
@@ -199,7 +200,6 @@ gallery.innerHTML = "";
 //     genererWorks(filteredWorks);
 //   }
 // }
-
 // // On ajoute les événements aux boutons
 // buttonObjets.addEventListener("click", () => filtrer("Objets"));
 // buttonAppartements.addEventListener("click", () => filtrer("Appartements"));
@@ -213,74 +213,97 @@ gallery.innerHTML = "";
 
 // LOGIN 
 
-export function formulaireLogIn() {
+// cours : 
+// recupérer les données d'un formulaire : 
+// let baliseNom = document.getElementById("nom")
+// let nom = baliseNom.value
+// console.log(nom); // affiche ce qui est contenu dans la balise name
 
-   const logIn = document.querySelector("#login");
-   logIn.addEventListener("submit", function (event) {
-  event.preventDefault();
+// vérif champs form : 
+// const form = document.querySelector('form');
+// Ajout d'un écouteur d'événement sur le formulaire pour écouter le submit
+// form.addEventListener("submit", (event) => {
+//     // On empêche le comportement par défaut
+//     event.preventDefault();
+    // On fait la vérification.
+//     const baliseNom = document.getElementById('nom');
+//     const valeurNom = baliseNom.value;
+//     if (valeurNom === "") {
+//         console.log('Le champ nom est vide');
+//     } else {
+//         console.log('Le champ nom est rempli');
+//     }
+// });
 
-  
-  const emailValue = document.querySelector("#email").value
-  const passwordValue = document.querySelector("#password").value
+    //   if (emailValue === "[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+") {
+    //     console.log('Email correct');
+    // } else {
+    //     console.log("L'email est incorrect");
+    // }
+    // catch ou throw new error ????
 
 
-fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    // Cet objet avis doit être converti en une chaîne de caractères au format JSON pour être transmis dans le body de la requête. Nous appelons donc la fonction JSON.stringify : 
-    body: JSON.stringify({
-    email: emailValue,
-    password: passwordValue
-    })
-  });
- });
-}
-formulaireLogIn()
+// export : tu rends cette fonction disponible à l’extérieur de ce fichier (dans un module ES).
+// Ça permet de l’importer ailleurs avec import { formulaireLogIn } from "./xxx.js";. ici pas besoin 
+// export 
 
-
-
-
-// corrigé : 
-export function formulaireLogIn() {
+function formulaireLogIn() {
 
   const logIn = document.querySelector("#login");
 
   logIn.addEventListener("submit", async function (event) {
+    // ne pas recharger la page : 
     event.preventDefault();
 
+    // je récupère la valeur :
     const emailValue = document.querySelector("#email").value;
     const passwordValue = document.querySelector("#password").value;
 
     try {
-      const response = await fetch("http://localhost:5678/api/users/login", {
+
+      // requête POST vers l'API :
+      const response = await fetch(urlLogin, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Cet objet avis doit être converti en une chaîne de caractères au format JSON pour être transmis dans le body de la requête. Nous appelons donc la fonction JSON.stringify :
         body: JSON.stringify({
           email: emailValue,
           password: passwordValue
         })
       });
 
-      // const data = await response.json();
+      // conversion de la réponse en JSON :
+      const data = await response.json();
+     if (response.ok) {
+        localStorage.setItem("token", data.token);
+        // Redirection vers l'accueil
+        window.location.href = "index.html";
+      }
+else {
 
-    //   if (response.ok) {
-    //     // Stocker le token
-    //     localStorage.setItem("token", data.token);
+  // on vérifie si un message existe déjà
+  let errorMessage = document.querySelector(".error-message");
 
-    //     // Redirection vers l'accueil
-    //     window.location.href = "index.html";
-    //   } else {
-    //     document.querySelector(".error-message").textContent =
-    //       "Email ou mot de passe incorrect";
-    //   }
+  // s'il n'existe pas, on le crée
+  if (!errorMessage) {
+    errorMessage = document.createElement("p");
+    errorMessage.classList.add("error-message");
+    document.querySelector("form").appendChild(errorMessage);
+  }
 
-    // } catch (error) {
-    //   console.error(error);
-    //   document.querySelector(".error-message").textContent =
-    //     "Une erreur est survenue.";
-    }
-  });
+  // on met le texte dedans
+  errorMessage.textContent = "Email ou mot de passe incorrect";
 }
 
-formulaireLogIn();
+    } catch (error) {
+      console.error(error);
+      document.querySelector(".error-message").textContent =
+        "Une erreur est survenue.";
+    }
+
+  });
+}
+formulaireLogIn()
+
+
 
