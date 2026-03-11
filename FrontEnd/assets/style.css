@@ -178,6 +178,10 @@ li:hover {
 	margin: auto;
 	height: 1024px;
 }
+#loginsection h2{
+	display: flex;
+	justify-content: center;
+}
 
 #contact,
 #login > * {
@@ -239,7 +243,11 @@ footer nav ul {
 }
 
 
-/* a revoir  */
-form p:firstchild{
+/* a revoir 
+#login p:last-child {
+  text-decoration: underline;
+} */
+
+#forgot{
 	text-decoration: underline;
 }

@@ -12,7 +12,7 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
-    <script src="script.js" defer></script>
+    <script src="./login.js" defer></script>
   </head>
   <body>
     <header>
@@ -21,13 +21,13 @@
         <ul>
           <li><a href="index.html">projets</a></li>
           <li>contact</li>
-          <li>login</li>
-          <!-- mettre en gras login  -->
+          <li id="logbold">login</li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
     </header>
-    <section>
+    <section id="loginsection">
+      <!-- mettre en gras login dans la nav bar / login centré / pq email centré relou -->
       <h2>Log in</h2>
       <form action="#" method="post" id="login">
         <label for="email">Email</label>
@@ -36,7 +36,7 @@
         <input type="password" name="password" id="password" />
         <input type="submit" value="Se connecter" />
         <!-- <p class="error-message"></p> -->
-        <p>Mot de passe oublié</p>
+        <p id="forgot">Mot de passe oublié</p>
         <!-- a souligner ou lien ? -->
       </form>
     </section>

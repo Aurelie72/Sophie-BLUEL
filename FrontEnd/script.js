@@ -1,43 +1,6 @@
-//    let works = []
-
-//    fetch("http://localhost:5678/api/works")
-//   .then(response => response.json())
-//   .then(data => {
-//     works = data; 
-//         for (let i= 0; i < data.length; i++) {
-
-//         const work = works[i];
-        
-//           const gallery = document.querySelector(".gallery");
-//           const figure = document.createElement("figure")
-
-//           gallery.appendChild(figure)
-
-//           const imageElement = document.createElement("img");
-//           imageElement.src = work.imageUrl; 
-//           figure.appendChild(imageElement); 
-
-//           const titleElement = document.createElement("figcaption");
-//           titleElement.textContent = work.title; 
-//           figure.appendChild(titleElement); 
-        
-//         }
-//     })
-//     // .catch (error => console.error("Erreur :", error));
-
-//     let buttons = document.querySelector(".buttons");
-//     buttons.addEventListener("click",() => {
-//       const workfilter = works.filter(function(work){
-//     return work.category.name === "Objets";
-//   });
-
-//   console.log(workfilter);
-// });
 
 let urlCategories = "http://localhost:5678/api/categories"
 let urlWorks = "http://localhost:5678/api/works"
-let urlLogin = "http://localhost:5678/api/users/login"
-
 
 async function init() {
   const categories = await fetch(urlCategories).then(response => response.json());
@@ -54,14 +17,6 @@ const buttonTous = document.createElement("button");
               buttonTous.id = "tous";
               divBouttons.appendChild(buttonTous);
 
-    // Creation des autres boutons via categories :
-            // for (let i= 0; i < categories.length; i++) {
-            // const categorie = categories[i];
-      
-            //   const bouton = document.createElement("button");
-            //   bouton.textContent = categorie.name; 
-              
-              // ou 
               categories.forEach(categorie => {
   const bouton = document.createElement("button");
   bouton.textContent = categorie.name;
@@ -80,29 +35,7 @@ const buttonTous = document.createElement("button");
     }
     genererBoutons();
 
-    // creation categorie a partir de works : erreur 
-  // for (let i= 0; i < 3; i++) {
-    //             const work = works[i];
-      
-    //           const bouton = document.createElement("button");
-    //           bouton.textContent = work.category.name; 
-
-    // if (work.category.name === "Objets") {
-    //   bouton.id = "objets";
-    // }
-    // else if (work.category.name === "Appartements") {
-    //   bouton.id = "appartements";
-    // }
-    // else if (work.category.name === "Hotels & restaurants") {
-    //   bouton.id = "hotelsrest";
-    // }
-    //           divBouttons.appendChild(bouton);       
-    //   }
-    // }
-    // genererBoutons();
-    
-    
-    
+   
     // GENERER LES TRAVAUX DYNAMIQUEMENT / 
     const gallery = document.querySelector(".gallery");
 
@@ -124,31 +57,7 @@ gallery.innerHTML = "";
           figure.appendChild(titleElement); 
         }
     }
-
-    // avec innerHTML : 
-//     genererWorks(works);
-
-//     function genererWorks(works) {
-//   gallery.innerHTML = works.map(work => 
-// map prend une fonction qui reçoit chaque élément du tableau (work)
-                        // et doit retourner quelque chose (ici, une string HTML).
-                        // Donc :
-                        // work = un élément du tableau works
-                        // => = “retourne”
-                        // la string entre backticks = ce que tu veux générer pour chaque élément`
-  //  <figure>
-  // //  <img src="${work.imageUrl}" alt="${work.title}">
-  //    <figcaption>${work.title}</figcaption>
-  //  </figure>
-  //  `).join("");               
-                        // join sert à coller les éléments d’un tableau en une seule string.
-                        // Tu choisis ce que tu mets entre chaque élément :
-                        // join("") → rien entre les éléments
-                        // join(",") → une virgule
-                        // join("\n") → un retour à la ligne
-// }
-// genererWorks(works);
-  
+    genererWorks(works);
 
     // FILTRES 
 
@@ -182,128 +91,5 @@ gallery.innerHTML = "";
      });
 }
     init();
-
-    // deuxieme version FILTRES 
-    
-
-// const buttonObjets = document.querySelector("#objets");
-// const buttonAppartements = document.querySelector("#appartements");
-// const buttonHotelsRest = document.querySelector("#hotelsrest");
-// const buttonTous = document.querySelector("#tous");
-
-// // Fonction pour filtrer et générer les works
-// function filtrer(categorie) {
-//   if (categorie === "Tous") {
-//     genererWorks(works);
-//   } else {
-//     const filteredWorks = works.filter(work => work.category.name === categorie);
-//     genererWorks(filteredWorks);
-//   }
-// }
-// // On ajoute les événements aux boutons
-// buttonObjets.addEventListener("click", () => filtrer("Objets"));
-// buttonAppartements.addEventListener("click", () => filtrer("Appartements"));
-// buttonHotelsRest.addEventListener("click", () => filtrer("Hotels & restaurants"));
-// buttonTous.addEventListener("click", () => filtrer("Tous"));
-// }
-//     init();
-
-
-
-
-// LOGIN 
-
-// cours : 
-// recupérer les données d'un formulaire : 
-// let baliseNom = document.getElementById("nom")
-// let nom = baliseNom.value
-// console.log(nom); // affiche ce qui est contenu dans la balise name
-
-// vérif champs form : 
-// const form = document.querySelector('form');
-// Ajout d'un écouteur d'événement sur le formulaire pour écouter le submit
-// form.addEventListener("submit", (event) => {
-//     // On empêche le comportement par défaut
-//     event.preventDefault();
-    // On fait la vérification.
-//     const baliseNom = document.getElementById('nom');
-//     const valeurNom = baliseNom.value;
-//     if (valeurNom === "") {
-//         console.log('Le champ nom est vide');
-//     } else {
-//         console.log('Le champ nom est rempli');
-//     }
-// });
-
-    //   if (emailValue === "[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+") {
-    //     console.log('Email correct');
-    // } else {
-    //     console.log("L'email est incorrect");
-    // }
-    // catch ou throw new error ????
-
-
-// export : tu rends cette fonction disponible à l’extérieur de ce fichier (dans un module ES).
-// Ça permet de l’importer ailleurs avec import { formulaireLogIn } from "./xxx.js";. ici pas besoin 
-// export 
-
-function formulaireLogIn() {
-
-  const logIn = document.querySelector("#login");
-
-  logIn.addEventListener("submit", async function (event) {
-    // ne pas recharger la page : 
-    event.preventDefault();
-
-    // je récupère la valeur :
-    const emailValue = document.querySelector("#email").value;
-    const passwordValue = document.querySelector("#password").value;
-
-    try {
-
-      // requête POST vers l'API :
-      const response = await fetch(urlLogin, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // Cet objet avis doit être converti en une chaîne de caractères au format JSON pour être transmis dans le body de la requête. Nous appelons donc la fonction JSON.stringify :
-        body: JSON.stringify({
-          email: emailValue,
-          password: passwordValue
-        })
-      });
-
-      // conversion de la réponse en JSON :
-      const data = await response.json();
-     if (response.ok) {
-        localStorage.setItem("token", data.token);
-        // Redirection vers l'accueil
-        window.location.href = "index.html";
-      }
-else {
-
-  // on vérifie si un message existe déjà
-  let errorMessage = document.querySelector(".error-message");
-
-  // s'il n'existe pas, on le crée
-  if (!errorMessage) {
-    errorMessage = document.createElement("p");
-    errorMessage.classList.add("error-message");
-    document.querySelector("form").appendChild(errorMessage);
-  }
-
-  // on met le texte dedans
-  errorMessage.textContent = "Email ou mot de passe incorrect";
-}
-
-    } catch (error) {
-      console.error(error);
-      document.querySelector(".error-message").textContent =
-        "Une erreur est survenue.";
-    }
-
-  });
-}
-formulaireLogIn()
-
 
 
