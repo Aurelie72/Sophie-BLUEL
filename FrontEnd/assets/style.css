@@ -217,8 +217,9 @@ label {
  	resize: none;
 	/* pour eviter dagrandir la zone  */
 }
-
-input[type="submit"]{
+/* verifier style bouton ajouter photo */
+input[type="submit"],
+#ajouterPhoto{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -227,6 +228,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	border: 2px solid #1D6154;
 }
 
 footer nav ul {
@@ -281,3 +283,101 @@ footer nav ul {
 	display: flex;
 	gap: 5px;
 }
+
+
+
+/* /* MODALE  *A REVOIR  */
+
+.modal{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top : 0;
+	left: 0; 
+	width: 100%;
+	height: 100%;
+	background: rgb(0, 0, 0, 0.8);
+}
+
+.modal-wrapper{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	background-color: #fff;
+	width: 600px;
+	height: 600px;
+	/* max-width: calc(100vw-20px);
+	max-height: calc(100vh-20px); */
+	padding: 20px;
+	overflow: auto;
+	/* BARRE POUR DESCENDRE  */
+
+}
+.js-modal-close{
+	padding: 8px 10px;
+	border: none;
+	font-size: 18px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+/* le trait : */
+#trait {
+    height: 1px;
+    width: 75%;
+    margin: 20px auto 0; /* 👈 espace au-dessus */
+    background-color: #B3B3B3;
+}
+
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px 0;
+}
+
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px 0;
+}
+
+.modal-gallery figure {
+  width: 18%;
+  height: 100px;
+  position: relative; /* indispensable */
+  overflow: hidden;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.modal-gallery img {
+   width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+/* Icône poubelle */
+.trash-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* revoir le style exact de la maquette figma  */
+/* responsive ? */

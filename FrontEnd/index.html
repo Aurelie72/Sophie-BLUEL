@@ -19,14 +19,6 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <!-- MODALE  -->
-    <!-- <a href="#modale1">Modale 1</a>
-    <aside id="modale1" class="modal"></aside>
-    <div class="modal-wrapper">
-      <h3>Galerie photo</h3>
-      <button>Ajouter une photo</button>
-    </div> -->
-
     <header>
       <!-- <section id="bandeaunoir">
         <!- <p><i class="fa-solid fa-pen-to-square"></i></p>
@@ -73,6 +65,29 @@
       </section>
       <section id="portfolio">
         <h2>Mes Projets</h2>
+
+        <!-- MODALE  -->
+
+        <!-- <a href="#modale1" class="js-modal">Modifier la modale</a> -->
+        <aside
+          id="modale1"
+          class="modal"
+          aria-hidden="true"
+          role="dialog"
+          aria-labelledby="titremodale"
+          style="display: none"
+        >
+          <!-- aria-modal="false" -->
+          <div class="modal-wrapper js-modal-stop">
+            <!-- <i class="js-modal-close fa-regular fa-xmark"></i> -->
+            <button class="js-modal-close modal-trigger">X</button>
+            <h3 id="titremodale">Galerie photo</h3>
+            <div class="modal-gallery"></div>
+            <div id="trait"></div>
+            <button id="ajouterPhoto">Ajouter une photo</button>
+          </div>
+        </aside>
+
         <div class="buttons">
           <!-- <button id="tous">Tous</button>
           <button id="objets">Objets</button>

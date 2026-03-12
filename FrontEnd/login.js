@@ -12,7 +12,7 @@ function formulaireLogIn() {
     // ne pas recharger la page : 
     event.preventDefault();
 
-    console.log(event)
+    // console.log(event)
 
     // je récupère la valeur :
     const emailValue = document.querySelector("#email").value;
@@ -65,17 +65,14 @@ function formulaireLogIn() {
     errorMessage.classList.add("error-message");
     document.querySelector("form").appendChild(errorMessage);
   }
-
   // on met le texte dedans
   errorMessage.textContent = "Email ou mot de passe incorrect";
 }
-
     } catch (error) {
       console.error(error);
       document.querySelector(".error-message").textContent =
         "Une erreur est survenue.";
     }
-
   });
 }
 formulaireLogIn()

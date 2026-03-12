@@ -2,9 +2,12 @@
 let urlCategories = "http://localhost:5678/api/categories"
 let urlWorks = "http://localhost:5678/api/works"
 
+let works = [];
+// pour que works existe en dehors de ma fonction init 
+
 async function init() {
   const categories = await fetch(urlCategories).then(response => response.json());
-  const works = await fetch(urlWorks).then(response => response.json());
+  works = await fetch(urlWorks).then(response => response.json());
   
         // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
 
@@ -113,9 +116,10 @@ document.querySelector("header").insertAdjacentHTML(
   `);
 document.querySelector("#portfolio h2").insertAdjacentHTML(
     "afterend",
-        `<div id="modifier"><p><i class="fa-solid fa-pen-to-square"></i></p>
-        <p>Modifier</p></div>
-        `
+  `<div id="modifier">
+      <p><i class="fa-solid fa-pen-to-square"></i></p>
+      <a href="#modale1" class="js-modal">Modifier</a>
+   </div>`
   );
  document.querySelector("#logbold").innerHTML= `Logout`
  document.querySelector("#logbold").addEventListener("click", () => {
@@ -123,4 +127,78 @@ document.querySelector("#portfolio h2").insertAdjacentHTML(
   // window.location.reload();
   // window.location.href = "index.html";
 });
+document.querySelectorAll(".js-modal").forEach(a => {
+  a.addEventListener("click", openModal)
+});
 }
+
+// MODALE 
+
+let modal = null
+
+const openModal= function(e){
+  e.preventDefault()
+  // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas 
+  const target = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
+
+  // pour retirer le display none qui cache au depart : 
+  target.style.display = null
+  target.removeAttribute("aria-hidden")
+  target.setAttribute("aria-modal",true )
+  modal = target
+
+  genererModalGallery(works);
+
+  modal.addEventListener("click", closeModal)
+  modal.querySelector(".js-modal-close").addEventListener('click',closeModal)
+  modal.querySelector(".js-modal-stop").addEventListener('click',stopPropagation)
+};
+
+const closeModal = function(e){
+  if (modal === null) return
+  e.preventDefault()
+  modal.style.display = "none"
+  modal.setAttribute("aria-hidden", true)
+  modal.removeAttribute("aria-modal")
+  modal.removeEventListener("click", closeModal)
+  modal.querySelector(".js-modal-close").removeEventListener('click',closeModal)
+  modal.querySelector(".js-modal-stop").removeEventListener('click',stopPropagation)
+  modal = null
+}
+
+const stopPropagation = function (e){
+  e.stopPropagation()
+}
+
+document.querySelectorAll(".js-modal").forEach(a=>{
+  a.addEventListener("click",openModal)
+});
+
+
+
+
+// fonction image dans modale :
+
+    const modalGallery = document.querySelector(".modal-gallery");
+
+  function genererModalGallery(works){
+modalGallery.innerHTML = "";
+        for (let i= 0; i < works.length; i++) {
+
+        const work = works[i];
+
+          const figure = document.createElement("figure")
+          modalGallery.appendChild(figure)
+
+          const trash = document.createElement("i");
+    trash.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+
+          const imageElement = document.createElement("img");
+          imageElement.src = work.imageUrl; 
+           figure.appendChild(imageElement);
+    figure.appendChild(trash);
+        }
+    }
+
+    
+    
