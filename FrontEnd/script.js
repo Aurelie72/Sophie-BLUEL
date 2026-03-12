@@ -89,7 +89,38 @@ gallery.innerHTML = "";
  buttonTous.addEventListener("click",() => {
      genererWorks(works)
      });
+      
 }
-    init();
+    init().then(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    modeEdition();
+  }
+});
 
+function modeEdition () {
+  // const token = localStorage.getItem("token");
+  // if (!token) return; // si pas connecté, on ne fait rien
 
+document.querySelector(".buttons").innerHTML= ""
+document.querySelector("header").insertAdjacentHTML(
+    "afterbegin", 
+    // car sinon avec inner efface le contenu et met le bandeau apres sophie 
+        `<section id="bandeaunoir">
+        <p><i class="fa-solid fa-pen-to-square"></i></p>
+        <p>Mode édition</p>
+        </section>
+  `);
+document.querySelector("#portfolio h2").insertAdjacentHTML(
+    "afterend",
+        `<div id="modifier"><p><i class="fa-solid fa-pen-to-square"></i></p>
+        <p>Modifier</p></div>
+        `
+  );
+ document.querySelector("#logbold").innerHTML= `Logout`
+ document.querySelector("#logbold").addEventListener("click", () => {
+  localStorage.removeItem("token");
+  // window.location.reload();
+  // window.location.href = "index.html";
+});
+}

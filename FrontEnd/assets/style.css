@@ -57,7 +57,7 @@ body {
 	font-size: 14px;
 }
 header {
-	display: flex;
+	/* display: flex; */
 	justify-content: space-between;
 	margin: 50px 0
 }
@@ -250,4 +250,34 @@ footer nav ul {
 
 #forgot{
 	text-decoration: underline;
+}
+
+
+/* Style mode édition :  */
+
+
+#titre{
+	display: flex;
+	justify-content: space-between;
+}
+#titre h1{
+	display: flex;
+	justify-content: left;
+}
+
+#bandeaunoir{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	background-color: black;
+	color: white;
+	width: 100%;
+	height: 59px;
+	/* revoir margin top et cotés  */
+}
+
+#modifier{
+	display: flex;
+	gap: 5px;
 }

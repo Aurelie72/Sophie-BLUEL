@@ -90,3 +90,4 @@ formulaireLogIn()
 
 const logbold = document.getElementById("logbold");
 logbold.style.fontWeight = "bold";
+
