@@ -57,12 +57,17 @@ body {
 	font-size: 14px;
 }
 header {
-	/* display: flex; */
+	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
+
+#header-index{
+display: block;
+}
+
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1{
@@ -199,6 +204,11 @@ form {
 
 }
 
+#modalajoutphoto form{
+	width: 70%;
+	margin: 0 auto;
+}
+
 input {
 	height: 50px;
 	font-size: 1.2em;
@@ -291,8 +301,8 @@ footer nav ul {
 
 .modal{
 	display: flex;
-	align-items: center;
-	justify-content: center;
+  justify-content: center;
+  align-items: center;
 	position: fixed;
 	top : 0;
 	left: 0; 
@@ -305,9 +315,7 @@ footer nav ul {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
+	margin: 0;
 	background-color: #fff;
 	width: 600px;
 	height: 600px;
@@ -337,26 +345,42 @@ footer nav ul {
     background-color: #B3B3B3;
 }
 
-.modal-gallery {
+/* modal  */
+
+#modal-gallery {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 20px 0;
+  flex-direction: column;
+  align-items: center; /* ❤️ centre le titre + galerie + bouton */
 }
+
+.titremodale{
+  text-align: center;
+  width: 100%;
+  font-size: 1.5em;
+}
+
+/* Centrer le bouton Ajouter une photo */
+#ajouterPhoto {
+  display: block;
+  margin: 20px auto;
+  height: 36px;
+}
+
 
 .modal-gallery {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  padding: 20px 0;
+  padding: 20px 75px;
 }
 
+/* photos modal OK  */
 .modal-gallery figure {
   width: 76.86px;
   height: 102.57px;
-  position: relative; /* indispensable */
+  position: relative; /* indispensable pour place la bin */
   overflow: hidden;
-  border-radius: 4px;
   margin: 0;
 }
 
@@ -367,16 +391,16 @@ footer nav ul {
 
 }
 
-/* Icône poubelle */
+/* Icône poubelle OK */
 .trash-icon {
   position: absolute;
   top: 5px;
   right: 5px;
   background-color: black;
   color: white;
-  padding: 5px;
-  font-size: 12px;
-  border-radius: 5px;
+  padding: 3px;
+  font-size: 11px;
+  border-radius: 2px;
   cursor: pointer;
 }
 

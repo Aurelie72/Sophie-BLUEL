@@ -120,7 +120,34 @@ document.querySelector("#portfolio h2").insertAdjacentHTML(
       <p><i class="fa-solid fa-pen-to-square"></i></p>
       <a href="#modale1" class="js-modal">Modifier</a>
    </div>`
+
+   
   );
+
+  // DONNER DU STYLE VIA JS / POUR TITRE <section id="portfolio"> : **************
+const h2 = document.querySelector("#portfolio h2");
+const modifier = document.querySelector("#modifier");
+const portfolio = document.querySelector("#portfolio");
+
+const conteneurH2EtModifier = document.createElement("div")
+
+conteneurH2EtModifier.style.display = "flex";
+conteneurH2EtModifier.style.justifyContent = "center";
+conteneurH2EtModifier.style.gap = "15px";
+// aligner parfaitement malgres différente taille de police :
+conteneurH2EtModifier.style.alignItems = "baseline"; 
+
+// portfolio.appendChild(conteneurH2EtModifier); pour le mettre au debut :
+portfolio.insertAdjacentElement("afterbegin", conteneurH2EtModifier);
+
+conteneurH2EtModifier.appendChild(h2);
+conteneurH2EtModifier.appendChild(modifier);
+
+// ************************************************************************************
+
+
+
+
  document.querySelector("#logbold").innerHTML= `Logout`
  document.querySelector("#logbold").addEventListener("click", () => {
   localStorage.removeItem("token");
@@ -196,6 +223,8 @@ modalGallery.innerHTML = "";
 
           const trash = document.createElement("i");
     trash.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+    trash.dataset.id = work.id; // ← indispensable
+trash.addEventListener("click", deleteWork); // ← on attache l’event ici
 
           const imageElement = document.createElement("img");
           imageElement.src = work.imageUrl; 
@@ -257,3 +286,38 @@ async function deleteWork(event) {
     console.log("Erreur suppression");
   }
 }
+
+// async function envoyerNouveauProjet(file, title, categoryId) {
+//   const token = localStorage.getItem("token");
+
+//   const formData = new FormData();
+//   formData.append("image", file);
+//   formData.append("title", title);
+//   formData.append("category", categoryId);
+
+//   const response = await fetch("http://localhost:5678/api/works", {
+//     method: "POST",
+//     headers: {
+//       "Authorization": `Bearer ${token}`
+//     },
+//     body: formData
+//   });
+
+//   if (response.ok) {
+//     const newWork = await response.json();
+
+//     // Ajouter dans ton tableau works
+//     works.push(newWork);
+
+//     // Rafraîchir les galeries
+//     genererWorks(works);
+//     genererModalGallery(works);
+
+//     // Fermer la modale
+//     closeModal();
+
+//   } else {
+//     alert("Erreur lors de l’envoi du projet.");
+//   }
+// }
+
