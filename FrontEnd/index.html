@@ -77,14 +77,46 @@
           aria-labelledby="titremodale"
           style="display: none"
         >
-          <!-- aria-modal="false" -->
           <div class="modal-wrapper js-modal-stop">
-            <!-- <i class="js-modal-close fa-regular fa-xmark"></i> -->
+            <!-- Bouton fermer -->
             <button class="js-modal-close modal-trigger">X</button>
-            <h3 id="titremodale">Galerie photo</h3>
-            <div class="modal-gallery"></div>
-            <div id="trait"></div>
-            <button id="ajouterPhoto">Ajouter une photo</button>
+
+            <!-- SECTION GALERIE -->
+            <section id="modal-gallery">
+              <h3 id="titremodale">Galerie photo</h3>
+              <div class="modal-gallery"></div>
+              <div id="trait"></div>
+              <button id="ajouterPhoto">Ajouter une photo</button>
+            </section>
+
+            <!-- SECTION AJOUT PHOTO -->
+            <section id="modalajoutphoto" style="display: none">
+              <i class="fa-solid fa-arrow-left" id="retourgalerie"></i>
+              <!-- <button class="js-modal-close modal-trigger">X</button> -->
+              <h3 id="titremodale">Ajout Photo</h3>
+
+              <div>
+                <i class="fa-regular fa-image"></i>
+                <button>+ Ajouter photo</button>
+                <p>jpg, png : 4mo max</p>
+              </div>
+
+              <form action="#">
+                <label for="titre">Titre</label>
+                <input type="text" id="titre" />
+                <label for="categorie">Catégorie</label>
+                <select id="categorie">
+                  <option value="Hotels & restaurants">
+                    Hotels & restaurants
+                  </option>
+                  <option value="Objets">Objets</option>
+                  <option value="Appartements">Appartements</option>
+                </select>
+              </form>
+
+              <div id="trait"></div>
+              <button>Valider</button>
+            </section>
           </div>
         </aside>
 

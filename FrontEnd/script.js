@@ -141,6 +141,10 @@ const openModal= function(e){
   // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas 
   const target = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
 
+    // Réinitialisation de la modale
+  modalGallerySection.style.display = "block";
+  modalAjoutPhoto.style.display = "none";
+
   // pour retirer le display none qui cache au depart : 
   target.style.display = null
   target.removeAttribute("aria-hidden")
@@ -200,5 +204,56 @@ modalGallery.innerHTML = "";
         }
     }
 
-    
-    
+
+
+    // modale ajout de photo 
+const modalGallerySection = document.querySelector("#modal-gallery");
+const modalAjoutPhoto = document.querySelector("#modalajoutphoto");
+const ajouterPhoto = document.querySelector("#ajouterPhoto");
+const retourgalerie = document.querySelector("#retourgalerie");
+
+ajouterPhoto.addEventListener("click", (e) => {
+  e.preventDefault();
+  modalGallerySection.style.display = "none";
+  modalAjoutPhoto.style.display = "block";
+});
+
+retourgalerie.addEventListener("click",(e)=>{
+  e.preventDefault();
+   modalGallerySection.style.display = "block";
+  modalAjoutPhoto.style.display = "none";
+}
+);
+
+
+
+// supprimer works 
+
+async function deleteWork(event) {
+
+  const id = event.target.dataset.id;
+
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+
+    // supprimer du tableau works
+    works = works.filter(work => work.id != id);
+
+    // recharger la galerie principale
+    genererWorks(works);
+
+    // recharger la galerie modale
+    genererModalGallery(works);
+
+  } else {
+    console.log("Erreur suppression");
+  }
+}
