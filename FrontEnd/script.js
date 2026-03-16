@@ -5,6 +5,29 @@ let urlWorks = "http://localhost:5678/api/works"
 let works = [];
 // pour que works existe en dehors de ma fonction init 
 
+
+function genererWorks(works){
+  const gallery = document.querySelector(".gallery");
+
+  gallery.innerHTML = "";
+
+  for (let i = 0; i < works.length; i++) {
+
+    const work = works[i];
+
+    const figure = document.createElement("figure");
+    gallery.appendChild(figure);
+
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    figure.appendChild(imageElement);
+
+    const titleElement = document.createElement("figcaption");
+    titleElement.textContent = work.title;
+    figure.appendChild(titleElement);
+  }
+}
+
 async function init() {
   const categories = await fetch(urlCategories).then(response => response.json());
   works = await fetch(urlWorks).then(response => response.json());
@@ -114,6 +137,7 @@ document.querySelector("header").insertAdjacentHTML(
         <p>Mode édition</p>
         </section>
   `);
+  document.body.classList.add("bandeau");
 document.querySelector("#portfolio h2").insertAdjacentHTML(
     "afterend",
   `<div id="modifier">
@@ -148,7 +172,7 @@ conteneurH2EtModifier.appendChild(modifier);
 
 
 
- document.querySelector("#logbold").innerHTML= `Logout`
+ document.querySelector("#logbold").innerHTML= `logout`
  document.querySelector("#logbold").addEventListener("click", () => {
   localStorage.removeItem("token");
   // window.location.reload();
@@ -172,6 +196,7 @@ const openModal= function(e){
   modalGallerySection.style.display = "block";
   modalAjoutPhoto.style.display = "none";
 
+
   // pour retirer le display none qui cache au depart : 
   target.style.display = null
   target.removeAttribute("aria-hidden")
@@ -187,7 +212,7 @@ const openModal= function(e){
 
 const closeModal = function(e){
   if (modal === null) return
-  e.preventDefault()
+   if (e) e.preventDefault();
   modal.style.display = "none"
   modal.setAttribute("aria-hidden", true)
   modal.removeAttribute("aria-modal")
@@ -205,8 +230,165 @@ document.querySelectorAll(".js-modal").forEach(a=>{
   a.addEventListener("click",openModal)
 });
 
+// preview photo 
+
+// --- AJOUT PHOTO : INPUT FILE + PREVIEW ---
+
+const uploadZone = document.querySelector("#upload-zone");
+const inputFile = document.querySelector("#image");
+const preview = document.querySelector("#preview");
+const btnAddPhoto = document.querySelector("#btn-add-photo");
+
+// Ouvre l'explorateur de fichiers
+btnAddPhoto.addEventListener("click", (e) => {
+  e.preventDefault();
+  inputFile.click();
+});
+
+// Affiche la preview et masque uniquement le contenu interne
+inputFile.addEventListener("change", () => {
+  const file = inputFile.files[0];
+  if (!file) return;
+
+  const url = URL.createObjectURL(file);
+
+  // Afficher la preview
+  preview.src = url;
+  preview.style.display = "block";
+
+  // Masquer uniquement les éléments internes du cadre gris
+  uploadZone.querySelector("i").style.display = "none";
+  uploadZone.querySelector("button").style.display = "none";
+  uploadZone.querySelector("p").style.display = "none";
+});
+
+function showFormError() {
+  const error = document.querySelector("#form-error");
+  error.style.display = "block";
+}
+
+function hideFormError() {
+  const error = document.querySelector("#form-error");
+  error.style.display = "none";
+}
+
+// --- VALIDATION DU FORMULAIRE ---
+
+const titreInput = document.querySelector("#titre-photo");
+const categorieSelect = document.querySelector("#categorie");
+const btnValider = document.querySelector("#btn-valider");
+
+function validateForm() {
+  const file = inputFile.files[0];
+  const titre = titreInput.value.trim();
+  const categorie = categorieSelect.value;
+
+  const isValid = file && titre && categorie;
+
+  return isValid;
+}
+
+btnValider.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (!validateForm()) {
+    showFormError();
+    return;
+  }
+
+  hideFormError();
+  envoyerNouveauProjet(); // étape suivante
+});
+
+// --- ENVOYER LE NOUVEAU PROJET À L’API ---
+
+async function envoyerNouveauProjet() {
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("image", inputFile.files[0]);
+  formData.append("title", titreInput.value);
+  formData.append("category", categorieSelect.value);
+
+  const response = await fetch(urlWorks, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+    body: formData
+  });
+
+  if (response.ok) {
+    const newWork = await response.json();
+
+    // Ajouter dans ton tableau works
+    works.push(newWork);
+
+    // Rafraîchir les galeries
+    genererWorks(works);
+    genererModalGallery(works);
+
+    // Fermer la modale
+    closeModal();
+// obligatoire ?
+    resetForm();
+
+  } else {
+    alert("Erreur lors de l’envoi du projet.");
+  }
+}
 
 
+// Vérifier à chaque changement
+inputFile.addEventListener("change", validateForm);
+titreInput.addEventListener("input", validateForm);
+categorieSelect.addEventListener("change", validateForm);
+
+
+// --- CHARGER LES CATÉGORIES DANS LE SELECT ---
+
+async function loadCategories() {
+  const select = document.querySelector("#categorie");
+  select.innerHTML = ""; // on vide le select
+
+  const response = await fetch(urlCategories);
+  const categories = await response.json();
+
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.id; // IMPORTANT : ID numérique
+    option.textContent = cat.name;
+    select.appendChild(option);
+  });
+
+    // Sélectionner automatiquement la première catégorie
+  select.selectedIndex = 0;
+// obligatoire ?
+  // Revalider le formulaire après chargement des catégories
+  validateForm();
+}
+
+
+function resetForm() {
+  // Réinitialiser l’input file
+  inputFile.value = "";
+  preview.src = "";
+  preview.style.display = "none";
+
+  // Réafficher les éléments internes du cadre gris
+  uploadZone.querySelector("i").style.display = "block";
+  uploadZone.querySelector("button").style.display = "block";
+  uploadZone.querySelector("p").style.display = "block";
+
+  // Réinitialiser les champs texte et select
+  titreInput.value = "";
+
+  // Désactiver le bouton Valider
+  btnValider.disabled = true;
+
+  // Cacher le message d’erreur
+  hideFormError();
+}
 
 // fonction image dans modale :
 
@@ -241,10 +423,12 @@ const modalAjoutPhoto = document.querySelector("#modalajoutphoto");
 const ajouterPhoto = document.querySelector("#ajouterPhoto");
 const retourgalerie = document.querySelector("#retourgalerie");
 
-ajouterPhoto.addEventListener("click", (e) => {
+ajouterPhoto.addEventListener("click", async (e) => {
   e.preventDefault();
   modalGallerySection.style.display = "none";
   modalAjoutPhoto.style.display = "block";
+
+  await loadCategories();
 });
 
 retourgalerie.addEventListener("click",(e)=>{
@@ -286,38 +470,3 @@ async function deleteWork(event) {
     console.log("Erreur suppression");
   }
 }
-
-// async function envoyerNouveauProjet(file, title, categoryId) {
-//   const token = localStorage.getItem("token");
-
-//   const formData = new FormData();
-//   formData.append("image", file);
-//   formData.append("title", title);
-//   formData.append("category", categoryId);
-
-//   const response = await fetch("http://localhost:5678/api/works", {
-//     method: "POST",
-//     headers: {
-//       "Authorization": `Bearer ${token}`
-//     },
-//     body: formData
-//   });
-
-//   if (response.ok) {
-//     const newWork = await response.json();
-
-//     // Ajouter dans ton tableau works
-//     works.push(newWork);
-
-//     // Rafraîchir les galeries
-//     genererWorks(works);
-//     genererModalGallery(works);
-
-//     // Fermer la modale
-//     closeModal();
-
-//   } else {
-//     alert("Erreur lors de l’envoi du projet.");
-//   }
-// }
-

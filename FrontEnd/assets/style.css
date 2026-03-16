@@ -20,7 +20,9 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
+	/* pour dire que l'elément à la meme police que son parent :  */
 	font: inherit;
+	/* pour que l'élement s’aligne correctement avec le texte :  */
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -29,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+	/* un espacement neutre entre les lignes, 1.5 pour augmenter l'espace  */
 	line-height: 1;
 	background-color: #FFFEF8;
 }
@@ -37,14 +40,20 @@ ol, ul, a {
 	color: black;
 	text-decoration: none;
 }
+/* Supprime les guillemets automatiques.  */
 blockquote, q {
 	quotes: none;
 }
+
+/* Supprime tout contenu ajouté automatiquement autour des citations. */
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
+/* Supprime les espaces et fusionne les bordures dans les tableaux. */
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -62,12 +71,16 @@ header {
 	margin: 50px 0;
 }
 
+/* seulement le header de index.html  */
 #header-index{
 display: block;
 }
 
 section {
 	margin: 50px 0;
+}
+#portfolio{
+	margin: 100px 0;
 }
 
 h1{
@@ -78,12 +91,13 @@ h1{
 	font-weight: 800;
 	color: #B1663C
 }
-
+/* cible seulement les <span> qui sont directement à l’intérieur d’un <h1>. Le > signifie enfant direct.
+ */
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
+	/* espace entre les lettres  */
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
@@ -95,15 +109,14 @@ h2{
 nav ul {
 	display: flex;
 	align-items: center;
-	list-style-type: none;
-
+	/* list-style-type: none; doublon  */
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
+li a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -111,9 +124,13 @@ li:hover {
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
+	/* flex: 1 : indique que cet élément doit prendre tout l’espace disponible dans son conteneur flex. */
 }
 #introduction img {
+/* Par défaut, les <img> sont des éléments inline (comme <span>).
+display: block transforme l’image en élément bloc, ce qui permet :
+de gérer facilement la largeur (width) */
 	display: block;
 	margin: auto;
 	width: 80%;
@@ -134,11 +151,10 @@ li:hover {
 
 #portfolio .buttons{
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	gap: 10px;
-	height: 37px;
-	padding: 50px 0 50px 0;
+	height: 38px;
+	padding: 40px 0;
 }
 #portfolio .buttons #tous{
 	background-color: #1D6154;
@@ -146,6 +162,7 @@ li:hover {
 }
 
 #portfolio .buttons button{
+	cursor: pointer;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: #1D6154;
@@ -156,9 +173,10 @@ li:hover {
 	padding: 10px;
 }
 
+
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	/* margin-bottom: 1em; */
 }
 .gallery {
 	width: 100%;
@@ -177,6 +195,22 @@ li:hover {
 	margin: auto;
 }
 
+#contact,
+#login > * {
+	/* tous les enfants directs de l’élément avec id="login" auront le texte centré. */
+	text-align: center;
+}
+#contact h2{
+	margin-bottom: 20px;
+}
+form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+/* CSS LOGIN */
 #login{
 	padding-top: 100px;
 	width: 379px;
@@ -188,28 +222,9 @@ li:hover {
 	justify-content: center;
 }
 
-#contact,
-#login > * {
-	text-align: center;
-
-}
-#contact h2{
-	margin-bottom: 20px;
-}
-form {
-	text-align: left;
-	margin-top:30px;
-	display: flex;
-	flex-direction: column;
-
-}
-
-#modalajoutphoto form{
-	width: 70%;
-	margin: 0 auto;
-}
-
-input {
+/* INPUT  */
+input,
+select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -219,7 +234,6 @@ label {
 	margin: 2em 0 1em 0;
 	display: flex;
 	justify-content: flex-start;
-	
 }
 #contact textarea {
 	border: none;
@@ -227,21 +241,25 @@ label {
  	resize: none;
 	/* pour eviter dagrandir la zone  */
 }
-/* verifier style bouton ajouter photo */
+
 input[type="submit"],
-#ajouterPhoto{
+button[type="submit"],
+#ajouterPhoto,
+#btn-valider{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
 	width: 180px;
+	height: 37px;
 	text-align: center;
 	border-radius: 60px ;
 	border: 2px solid #1D6154;
 	cursor: pointer;
 }
 
+/* FOOTER  */
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -255,29 +273,17 @@ footer nav ul {
   font-weight: bold;
 }
 
-
-/* a revoir 
-#login p:last-child {
-  text-decoration: underline;
-} */
-
 #forgot{
 	text-decoration: underline;
 }
 
-
 /* Style mode édition :  */
-
 
 #titre{
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
-#titre h1{
-	display: flex;
-	justify-content: left;
-}
-
 #bandeaunoir{
 	display: flex;
 	justify-content: center;
@@ -285,27 +291,33 @@ footer nav ul {
 	gap: 5px;
 	background-color: black;
 	color: white;
-	width: 100%;
 	height: 59px;
-	/* revoir margin top et cotés  */
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    margin: 0;
+}
+/* class ajoutée via js pour espacer bandeau et titre  */
+.bandeau{
+	margin-top: 100px;
 }
 
 #modifier{
+	/* style via JS  */
 	display: flex;
 	gap: 5px;
 }
 
-
-
-/* /* MODALE  *A REVOIR  */
+/* /* MODALE partie 1 * */
 
 .modal{
 	display: flex;
-  justify-content: center;
-  align-items: center;
+  	justify-content: center;
+  	align-items: center;
 	position: fixed;
 	top : 0;
-	left: 0; 
+	/* left: 0;  */
 	width: 100%;
 	height: 100%;
 	background: rgb(0, 0, 0, 0.8);
@@ -313,9 +325,9 @@ footer nav ul {
 
 .modal-wrapper{
 	position: absolute;
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
-	margin: 0;
+	margin: 0; */
 	background-color: #fff;
 	width: 600px;
 	height: 600px;
@@ -324,10 +336,11 @@ footer nav ul {
 	padding: 20px;
 	overflow: auto;
 	/* BARRE POUR DESCENDRE  */
+	border-radius: 10px;
 
 }
+/* croix pour fermer  */
 .js-modal-close{
-	padding: 8px 10px;
 	border: none;
 	font-size: 18px;
 	position: absolute;
@@ -336,38 +349,24 @@ footer nav ul {
 	background-color: #fff;
 	cursor: pointer;
 }
-
-/* le trait : */
-#trait {
-    height: 1px;
-    width: 75%;
-    margin: 20px auto 0; /* 👈 espace au-dessus */
-    background-color: #B3B3B3;
-}
-
-/* modal  */
-
-#modal-gallery {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* ❤️ centre le titre + galerie + bouton */
-}
-
 .titremodale{
   text-align: center;
   width: 100%;
   font-size: 1.5em;
 }
 
-/* Centrer le bouton Ajouter une photo */
-#ajouterPhoto {
-  display: block;
-  margin: 20px auto;
-  height: 36px;
+/* Icône poubelle OK */
+.trash-icon {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background-color: black;
+	color: white;
+	padding: 3px;
+	font-size: 11px;
+	border-radius: 2px;
+	cursor: pointer;
 }
-
-
 .modal-gallery {
   display: flex;
   flex-wrap: wrap;
@@ -388,21 +387,75 @@ footer nav ul {
    width: 76.86px;
   height: 102.57px;
   object-fit: cover;
-
 }
 
-/* Icône poubelle OK */
-.trash-icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: black;
-  color: white;
-  padding: 3px;
-  font-size: 11px;
-  border-radius: 2px;
-  cursor: pointer;
+/* le trait : */
+.trait {
+    height: 1px;
+    width: 75%;
+    margin: 30px auto; 
+    background-color: #B3B3B3;
+}
+/* Centrer le bouton Ajouter une photo */
+#ajouterPhoto,
+#btn-valider{
+  display: block; 
 }
 
-/* revoir le style exact de la maquette figma  */
-/* responsive ? */
+/* Modale partie 2 */
+
+#modalajoutphoto{
+	margin: 0;
+}
+#modalajoutphoto h3{
+margin: 30px auto;
+}
+
+#retourgalerie{
+	border: none;
+	font-size: 18px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+#upload-zone{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #E8F1F6;
+	width: 71%;
+	height: 169px;
+	margin: 0 auto;
+	padding: 14px;
+}
+
+#btn-add-photo{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #306685;
+	background-color: #CBD6DC;
+	margin : 2em auto ;
+	width: 180px;
+	height: 37px;
+	text-align: center;
+	border-radius: 60px ;
+	border: 2px solid #CBD6DC;
+	cursor: pointer;
+}
+.fa-image{
+	color: #B9C5CC;
+	font-size: 76px;
+}
+
+#modalajoutphoto form{
+	width: 75%;
+	margin: 0 auto;
+}
+
+/* #btn-valider:disabled {
+  background-color: #A7A7A7;
+  cursor: not-allowed;
+} */

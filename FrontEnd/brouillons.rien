@@ -152,3 +152,31 @@
 // export : tu rends cette fonction disponible à l’extérieur de ce fichier (dans un module ES).
 // Ça permet de l’importer ailleurs avec import { formulaireLogIn } from "./xxx.js";. ici pas besoin 
 // export 
+
+
+// VARIABLES
+let works = [];
+
+// AFFICHAGE
+function genererWorks() {}
+function genererModalGallery() {}
+
+// API
+async function envoyerNouveauProjet() {}
+async function deleteWork() {}
+async function loadCategories() {}
+
+// MODALE
+function openModal() {}
+function closeModal() {}
+
+// INIT
+async function init() {}
+init();
+
+
+// pour rester connecté avec le token quand cxl ou add ... 
+// headers: {
+//   Authorization: "Bearer " + token
+// }
+

@@ -1,4 +1,3 @@
-
 // LOGIN 
 
 let urlLogin = "http://localhost:5678/api/users/login"
@@ -18,12 +17,11 @@ function formulaireLogIn() {
     const emailValue = document.querySelector("#email").value;
     const passwordValue = document.querySelector("#password").value;
 
-    try {
+    // try {
 
       // requête POST vers l'API :
       const response = await fetch(urlLogin, {
         method: "POST",
-
         // pour dire au back end ce que je tenvoies c'est du json : 
         headers: { "Content-Type": "application/json" },
         // Cet objet avis doit être converti en une chaîne de caractères au format JSON pour être transmis dans le body de la requête. Nous appelons donc la fonction JSON.stringify :
@@ -35,7 +33,6 @@ function formulaireLogIn() {
 
       // conversion de la réponse en JSON :
       const data = await response.json();
-
     //   console.log(data)
 
     //   propriété reponse.ok revoi true or false : 
@@ -63,28 +60,31 @@ function formulaireLogIn() {
   if (!errorMessage) {
     errorMessage = document.createElement("p");
     errorMessage.classList.add("error-message");
-    document.querySelector("form").appendChild(errorMessage);
+    document.querySelector("#login").appendChild(errorMessage);
   }
   // on met le texte dedans
   errorMessage.textContent = "Email ou mot de passe incorrect";
 }
-    } catch (error) {
-      console.error(error);
-      document.querySelector(".error-message").textContent =
-        "Une erreur est survenue.";
-    }
+//     } catch (error) {
+//   console.error(error);
+
+//   let errorMessage = document.querySelector(".error-message");
+
+//   // Si l'élément n'existe pas, on le crée
+//   if (!errorMessage) {
+//     errorMessage = document.createElement("p");
+//     errorMessage.classList.add("error-message");
+//     document.querySelector("#login").appendChild(errorMessage);
+//   }
+
+//   // On met le texte dedans
+//   errorMessage.textContent = "Une erreur est survenue.";
+// }
   });
 }
 formulaireLogIn()
 
-
-// pour rester connecté avec le token quand cxl ou add ... 
-// headers: {
-//   Authorization: "Bearer " + token
-// }
-
-
-
+// Style login en gras : 
 const logbold = document.getElementById("logbold");
 logbold.style.fontWeight = "bold";
 

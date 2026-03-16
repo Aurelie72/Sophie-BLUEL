@@ -34,10 +34,14 @@
           <ul>
             <!-- je connecte a mes projets :  -->
             <li><a href="#portfolio">projets</a></li>
-            <li>contact</li>
+            <li><a href="#contact">contact</a></li>
             <!-- je connecte ma page login :  -->
             <li><a href="./login.html" id="logbold">login</a></li>
-            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+            <li>
+              <a href="https://instagram.com" target="_blank"
+                ><img src="./assets/icons/instagram.png" alt="Instagram"
+              /></a>
+            </li>
           </ul>
         </nav>
       </section>
@@ -45,7 +49,10 @@
     <main>
       <section id="introduction">
         <figure>
-          <img src="./assets/images/sophie-bluel.png" alt="" />
+          <img
+            src="./assets/images/sophie-bluel.png"
+            alt="photo de Sophie Bluel"
+          />
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -82,31 +89,57 @@
         >
           <div class="modal-wrapper js-modal-stop">
             <!-- Bouton fermer -->
-            <button class="js-modal-close modal-trigger">X</button>
+            <button
+              class="js-modal-close modal-trigger"
+              aria-label="Fermer la fenêtre"
+            >
+              X
+            </button>
 
             <!-- SECTION GALERIE -->
             <section id="modal-gallery">
               <h3 id="titremodale" class="titremodale">Galerie photo</h3>
               <div class="modal-gallery"></div>
-              <div id="trait"></div>
+              <div class="trait"></div>
               <button id="ajouterPhoto">Ajouter une photo</button>
             </section>
 
             <!-- SECTION AJOUT PHOTO -->
             <section id="modalajoutphoto" style="display: none">
-              <i class="fa-solid fa-arrow-left" id="retourgalerie"></i>
+              <i
+                class="fa-solid fa-arrow-left"
+                id="retourgalerie"
+                aria-label="Retour à la galerie"
+              ></i>
               <!-- <button class="js-modal-close modal-trigger">X</button> -->
               <h3 class="titremodale">Ajout Photo</h3>
 
-              <div>
+              <div id="upload-zone">
                 <i class="fa-regular fa-image"></i>
-                <button>+ Ajouter photo</button>
+                <button id="btn-add-photo">+ Ajouter photo</button>
                 <p>jpg, png : 4mo max</p>
               </div>
 
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                style="display: none"
+              />
+              <img
+                id="preview"
+                style="
+                  display: none;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  border-radius: 10px;
+                "
+              />
+
               <form action="#">
-                <label for="titre">Titre</label>
-                <input type="text" id="titre" />
+                <label for="titre-photo">Titre</label>
+                <input type="text" id="titre-photo" />
                 <label for="categorie">Catégorie</label>
                 <select id="categorie">
                   <option value="Hotels & restaurants">
@@ -117,8 +150,11 @@
                 </select>
               </form>
 
-              <div id="trait"></div>
-              <button>Valider</button>
+              <div class="trait"></div>
+              <button id="btn-valider">Valider</button>
+              <p id="form-error" style="color: red; display: none">
+                Veuillez remplir tous les champs.
+              </p>
             </section>
           </div>
         </aside>
