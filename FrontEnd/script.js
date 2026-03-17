@@ -320,6 +320,22 @@ async function loadCategories() {
   validateForm();
 }
 
+// --- VALIDATION DU FORMULAIRE ---
+
+const titreInput = document.querySelector("#titre-photo");
+const categorieSelect = document.querySelector("#categorie");
+const btnValider = document.querySelector("#btn-valider");
+
+function validateForm() {
+  const file = inputFile.files[0];
+  const titre = titreInput.value.trim(); // trim cest pour retirer les espaces
+  const categorie = categorieSelect.value;
+
+  const isValid = file && titre && categorie;
+
+  return isValid;
+}
+
 // PREVIEW PHOTO *******************************************************************
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---
@@ -360,22 +376,6 @@ function showFormError() {
 function hideFormError() {
   const error = document.querySelector("#form-error");
   error.style.display = "none";
-}
-
-// --- VALIDATION DU FORMULAIRE ---
-
-const titreInput = document.querySelector("#titre-photo");
-const categorieSelect = document.querySelector("#categorie");
-const btnValider = document.querySelector("#btn-valider");
-
-function validateForm() {
-  const file = inputFile.files[0];
-  const titre = titreInput.value.trim();
-  const categorie = categorieSelect.value;
-
-  const isValid = file && titre && categorie;
-
-  return isValid;
 }
 
 btnValider.addEventListener("click", (e) => {
@@ -432,8 +432,6 @@ async function envoyerNouveauProjet() {
 inputFile.addEventListener("change", validateForm);
 titreInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);
-
-
 
 function resetForm() {
   // Réinitialiser l’input file

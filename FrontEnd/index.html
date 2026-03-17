@@ -47,7 +47,7 @@
       </section>
     </header>
     <main>
-      <section id="introduction">
+      <div id="introduction">
         <figure>
           <img
             src="./assets/images/sophie-bluel.png"
@@ -72,7 +72,7 @@
             : architecte DPLG, décorateur(trice)
           </p>
         </article>
-      </section>
+      </div>
       <section id="portfolio">
         <h2>Mes Projets</h2>
 
@@ -83,18 +83,12 @@
           id="modale1"
           class="modal"
           aria-hidden="true"
-          role="dialog"
           aria-labelledby="titremodale"
           style="display: none"
         >
           <div class="modal-wrapper js-modal-stop">
             <!-- Bouton fermer -->
-            <button
-              class="js-modal-close modal-trigger"
-              aria-label="Fermer la fenêtre"
-            >
-              X
-            </button>
+            <button class="js-modal-close modal-trigger">X</button>
 
             <!-- SECTION GALERIE -->
             <section id="modal-gallery">
@@ -106,11 +100,7 @@
 
             <!-- SECTION AJOUT PHOTO -->
             <section id="modalajoutphoto" style="display: none">
-              <i
-                class="fa-solid fa-arrow-left"
-                id="retourgalerie"
-                aria-label="Retour à la galerie"
-              ></i>
+              <i class="fa-solid fa-arrow-left" id="retourgalerie"></i>
               <!-- <button class="js-modal-close modal-trigger">X</button> -->
               <h3 class="titremodale">Ajout Photo</h3>
 
@@ -128,6 +118,8 @@
               />
               <img
                 id="preview"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                alt=""
                 style="
                   display: none;
                   width: 100%;
@@ -247,9 +239,9 @@
         <p>Vous avez un projet ? Discutons-en !</p>
         <form action="#" method="post">
           <label for="name">Nom</label>
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" id="name" autocomplete="on" />
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" />
+          <input type="email" name="email" id="email" autocomplete="on" />
           <label for="message">Message</label>
           <textarea name="message" id="message" cols="30" rows="10"></textarea>
           <input type="submit" value="Envoyer" />
