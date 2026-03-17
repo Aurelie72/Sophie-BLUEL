@@ -311,33 +311,30 @@ footer nav ul {
 
 /* /* MODALE partie 1 * */
 
-.modal{
-	display: flex;
-  	justify-content: center;
-  	align-items: center;
-	position: fixed;
-	top : 0;
-	/* left: 0;  */
-	width: 100%;
-	height: 100%;
-	background: rgb(0, 0, 0, 0.8);
+.modal {
+  display: flex;
+  justify-content: center;        
+  align-items: center;            
+  position: fixed;
+  top: 0;
+  left: 0;                        /* nécessaire pour couvrir tout l'écran */
+  width: 100vw;                    /* toute la largeur de l'écran */
+  height: 100vh;                   /* toute la hauteur de l'écran */
+  background: rgba(0, 0, 0, 0.8); 
+  z-index: 1000;                   /* au-dessus du reste */
 }
 
-.modal-wrapper{
-	position: absolute;
-	/* display: flex;
-	flex-direction: column;
-	margin: 0; */
-	background-color: #fff;
-	width: 600px;
-	height: 600px;
-	/* max-width: calc(100vw-20px);
-	max-height: calc(100vh-20px); */
-	padding: 20px;
-	overflow: auto;
-	/* BARRE POUR DESCENDRE  */
-	border-radius: 10px;
-
+.modal-wrapper {
+  position: relative;              /* position relative pour bouton X */
+  background-color: #fff;
+  width: 600px;                    
+  height: 600px;                   
+  max-width: calc(100vw - 40px);    /* ne dépasse pas l'écran (padding 20px de chaque côté) */
+  max-height: calc(100vh - 40px);   /* ne dépasse pas l'écran */
+  padding: 20px;                    
+  overflow: auto;                   /* scroll si contenu trop grand  BARRE POUR DESCENDRE*/
+  border-radius: 10px;              
+  box-sizing: border-box;           /* padding inclus dans width/height */
 }
 /* croix pour fermer  */
 .js-modal-close{
@@ -459,3 +456,5 @@ margin: 30px auto;
   background-color: #A7A7A7;
   cursor: not-allowed;
 } */
+
+/* style de la preview  */

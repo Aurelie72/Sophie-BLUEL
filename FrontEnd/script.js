@@ -1,154 +1,137 @@
-
+// je crée des variables pour mes liens :
 let urlCategories = "http://localhost:5678/api/categories"
 let urlWorks = "http://localhost:5678/api/works"
 
+// pour que works et catégories existe en dehors de mes fonctions et pouvoir les réutiliser, globales 
 let works = [];
-// pour que works existe en dehors de ma fonction init 
+let categories = [];
 
-
+// Afficher les works :
 function genererWorks(works){
-  const gallery = document.querySelector(".gallery");
+ const gallery = document.querySelector(".gallery");
 
-  gallery.innerHTML = "";
+ gallery.innerHTML = "";
 
-  for (let i = 0; i < works.length; i++) {
+ for (let i = 0; i < works.length; i++) {
+ const work = works[i];
 
-    const work = works[i];
+  // ou works.forEach(function(work){ ou works.forEach(work => {
 
-    const figure = document.createElement("figure");
-    gallery.appendChild(figure);
+  const figure = document.createElement("figure");
+  gallery.appendChild(figure);
 
-    const imageElement = document.createElement("img");
-    imageElement.src = work.imageUrl;
-    figure.appendChild(imageElement);
+  const imageElement = document.createElement("img");
+  imageElement.src = work.imageUrl;
+  figure.appendChild(imageElement);
 
-    const titleElement = document.createElement("figcaption");
-    titleElement.textContent = work.title;
-    figure.appendChild(titleElement);
-  }
+  const titleElement = document.createElement("figcaption");
+  titleElement.textContent = work.title;
+  figure.appendChild(titleElement);
+ }
 }
 
-async function init() {
-  const categories = await fetch(urlCategories).then(response => response.json());
-  works = await fetch(urlWorks).then(response => response.json());
-  
-        // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
+    // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
 
-  const divBouttons = document.querySelector(".buttons");
-    function genererBoutons (){
+ const divBouttons = document.querySelector(".buttons");
+  function genererBoutons (){
 
-    // ajout du bouton TOUS :
+  // ajout du bouton TOUS :
 const buttonTous = document.createElement("button");
-              buttonTous.textContent = "Tous"; 
-              buttonTous.id = "tous";
-              divBouttons.appendChild(buttonTous);
+       buttonTous.textContent = "Tous"; 
+       buttonTous.id = "tous";
+       divBouttons.appendChild(buttonTous);
 
-              categories.forEach(categorie => {
-  const bouton = document.createElement("button");
-  bouton.textContent = categorie.name;
+ categories.forEach(categorie => {
+ const bouton = document.createElement("button");
+ bouton.textContent = categorie.name;
 
-    if (categorie.name === "Objets") {
-      bouton.id = "objets";
-    }
-    else if (categorie.name === "Appartements") {
-      bouton.id = "appartements";
-    }
-    else if (categorie.name === "Hotels & restaurants") {
-      bouton.id = "hotelsrest";
-    }
-              divBouttons.appendChild(bouton);       
-      });
-    }
-    genererBoutons();
+ // ou bouton.dataset.id = categorie.id;
 
-   
-    // GENERER LES TRAVAUX DYNAMIQUEMENT / 
-    const gallery = document.querySelector(".gallery");
-
-  function genererWorks(works){
-gallery.innerHTML = "";
-        for (let i= 0; i < works.length; i++) {
-
-        const work = works[i];
-
-          const figure = document.createElement("figure")
-          gallery.appendChild(figure)
-
-          const imageElement = document.createElement("img");
-          imageElement.src = work.imageUrl; 
-          figure.appendChild(imageElement); 
-
-          const titleElement = document.createElement("figcaption");
-          titleElement.textContent = work.title; 
-          figure.appendChild(titleElement); 
-        }
-    }
-    genererWorks(works);
+  if (categorie.name === "Objets") {
+   bouton.id = "objets";
+  }
+  else if (categorie.name === "Appartements") {
+   bouton.id = "appartements";
+  }
+  else if (categorie.name === "Hotels & restaurants") {
+   bouton.id = "hotelsrest";
+  }
+       divBouttons.appendChild(bouton);    
+   });
+  }
 
     // FILTRES 
 
-    let buttonObjet = document.querySelector(".buttons #objets");
-    buttonObjet.addEventListener("click",() => {
-      const workfilted = works.filter(function (work) {
-        return work.category.name === "Objets";   
-   } )  
-     genererWorks(workfilted);
-     })
- 
- let buttonAppartement = document.querySelector(".buttons #appartements");
- buttonAppartement.addEventListener("click",() => {
+  function filtres () {
+  let buttonObjet = document.querySelector(".buttons #objets");
+  buttonObjet.addEventListener("click",() => {
    const workfilted = works.filter(function (work) {
-     return work.category.name === "Appartements"; 
-   } )  
-     genererWorks(workfilted);
-     })
+    return work.category.name === "Objets";  
+ } ) 
+  genererWorks(workfilted);
+  })
 
-      let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
- buttonHotelsRest.addEventListener("click",() => {
-   const workfilted = works.filter(function (work) {
-     return work.category.name === "Hotels & restaurants"; 
-   } )  
-     genererWorks(workfilted);
-     })
+let buttonAppartement = document.querySelector(".buttons #appartements");
+buttonAppartement.addEventListener("click",() => {
+const workfilted = works.filter(function (work) {
+return work.category.name === "Appartements"; 
+ } ) 
+genererWorks(workfilted);
+  })
 
-           let buttonTous = document.querySelector(".buttons #tous");
- buttonTous.addEventListener("click",() => {
-     genererWorks(works)
-     });
-      
+   let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
+buttonHotelsRest.addEventListener("click",() => {
+const workfilted = works.filter(function (work) {
+return work.category.name === "Hotels & restaurants"; 
+ } ) 
+genererWorks(workfilted);
+  })
+
+ let buttonTous = document.querySelector(".buttons #tous");
+buttonTous.addEventListener("click",() => {
+genererWorks(works)
+  });
+   
 }
-    init().then(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    modeEdition();
-  }
+
+// Initialiser : les works, catégories et filtres : 
+
+async function init() {
+ categories = await fetch(urlCategories).then(response => response.json());
+ works = await fetch(urlWorks).then(response => response.json());
+
+ genererWorks(works)
+ genererBoutons();
+ filtres ()
+}
+  init().then(() => {
+ const token = localStorage.getItem("token");
+ if (token) {
+  modeEdition();
+ }
 });
 
 function modeEdition () {
-  // const token = localStorage.getItem("token");
-  // if (!token) return; // si pas connecté, on ne fait rien
 
 document.querySelector(".buttons").innerHTML= ""
 document.querySelector("header").insertAdjacentHTML(
-    "afterbegin", 
-    // car sinon avec inner efface le contenu et met le bandeau apres sophie 
-        `<section id="bandeaunoir">
-        <p><i class="fa-solid fa-pen-to-square"></i></p>
-        <p>Mode édition</p>
-        </section>
-  `);
-  document.body.classList.add("bandeau");
+  "afterbegin", 
+  // car sinon avec inner efface le contenu et met le bandeau apres sophie 
+    `<section id="bandeaunoir">
+    <p><i class="fa-solid fa-pen-to-square"></i></p>
+    <p>Mode édition</p>
+    </section>
+ `);
+ document.body.classList.add("bandeau");
 document.querySelector("#portfolio h2").insertAdjacentHTML(
-    "afterend",
-  `<div id="modifier">
-      <p><i class="fa-solid fa-pen-to-square"></i></p>
-      <a href="#modale1" class="js-modal">Modifier</a>
-   </div>`
+  "afterend",
+ `<div id="modifier">
+   <p><i class="fa-solid fa-pen-to-square"></i></p>
+   <a href="#modale1" class="js-modal">Modifier</a>
+ </div>`
+ );
 
-   
-  );
-
-  // DONNER DU STYLE VIA JS / POUR TITRE <section id="portfolio"> : **************
+ // DONNER DU STYLE VIA JS / POUR TITRE <section id="portfolio"> : **************
 const h2 = document.querySelector("#portfolio h2");
 const modifier = document.querySelector("#modifier");
 const portfolio = document.querySelector("#portfolio");
@@ -169,28 +152,32 @@ conteneurH2EtModifier.appendChild(modifier);
 
 // ************************************************************************************
 
-
-
-
- document.querySelector("#logbold").innerHTML= `logout`
- document.querySelector("#logbold").addEventListener("click", () => {
-  localStorage.removeItem("token");
-  // window.location.reload();
-  // window.location.href = "index.html";
+document.querySelector("#logbold").innerHTML= `logout`
+document.querySelector("#logbold").addEventListener("click", (e) => {
+ e.preventDefault();
+ localStorage.removeItem("token");
+ location.reload(); 
+ // window.location.reload();
+ // window.location.href = "index.html";
 });
-document.querySelectorAll(".js-modal").forEach(a => {
-  a.addEventListener("click", openModal)
-});
+// document.querySelectorAll(".js-modal").forEach(a => {
+//  a.addEventListener("click", openModal)
+// });
+// // jai un seul js modal alors par besoinde for each
+ const ouvrirLaModal = document.querySelector(".js-modal");
+ouvrirLaModal.addEventListener("click", openModal);
+
 }
 
-// MODALE 
+
+// MODALE *********************************************************************************
 
 let modal = null
 
 const openModal= function(e){
   e.preventDefault()
   // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas 
-  const target = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
+  modal = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
 
     // Réinitialisation de la modale
   modalGallerySection.style.display = "block";
@@ -198,11 +185,10 @@ const openModal= function(e){
 
 
   // pour retirer le display none qui cache au depart : 
-  target.style.display = null
-  target.removeAttribute("aria-hidden")
-  target.setAttribute("aria-modal",true )
-  modal = target
-
+  modal.style.display = null
+  modal.removeAttribute("aria-hidden")
+  modal.setAttribute("aria-modal",true )
+ 
   genererModalGallery(works);
 
   modal.addEventListener("click", closeModal)
@@ -226,11 +212,115 @@ const stopPropagation = function (e){
   e.stopPropagation()
 }
 
-document.querySelectorAll(".js-modal").forEach(a=>{
-  a.addEventListener("click",openModal)
+
+// fonction image dans modale :
+
+    const modalGallery = document.querySelector(".modal-gallery");
+
+  function genererModalGallery(works){
+modalGallery.innerHTML = "";
+        for (let i= 0; i < works.length; i++) {
+
+        const work = works[i];
+
+          const figure = document.createElement("figure")
+          modalGallery.appendChild(figure)
+
+          const trash = document.createElement("i");
+    trash.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+    trash.dataset.id = work.id; //
+trash.addEventListener("click", deleteWork); 
+
+          const imageElement = document.createElement("img");
+          imageElement.src = work.imageUrl; 
+          imageElement.alt = work.title;
+           figure.appendChild(imageElement);
+    figure.appendChild(trash);
+        }
+    }
+// *************************************************************************************
+
+// SUPPRIMER WORKS dans la modale :
+
+async function deleteWork(event) {
+  const id = event.target.dataset.id;
+
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+    // supprimer du tableau works
+    works = works.filter(work => work.id != id);
+    // recharger la galerie principale
+    genererWorks(works);
+    // recharger la galerie modale
+    genererModalGallery(works);
+
+  } else {
+    console.log("Erreur suppression");
+  }
+}
+
+
+    // Modale Partie 2 Ajout de Photo ********************************************************
+const modalGallerySection = document.querySelector("#modal-gallery");
+const modalAjoutPhoto = document.querySelector("#modalajoutphoto");
+const ajouterPhoto = document.querySelector("#ajouterPhoto");
+const retourgalerie = document.querySelector("#retourgalerie");
+
+ajouterPhoto.addEventListener("click", async (e) => {
+  e.preventDefault(); //pas obligé car i ne fait pas daction 
+  modalGallerySection.style.display = "none";
+  modalAjoutPhoto.style.display = "block";
+
+  await loadCategories();
 });
 
-// preview photo 
+retourgalerie.addEventListener("click",(e)=>{
+  e.preventDefault();
+   modalGallerySection.style.display = "block";
+  modalAjoutPhoto.style.display = "none";
+}
+);
+
+// --- CHARGER LES CATÉGORIES DANS LE SELECT ---
+
+async function loadCategories() {
+  const select = document.querySelector("#categorie");
+  select.innerHTML = ""; 
+
+  // const response = await fetch(urlCategories); pas besoin car déja fait dans init 
+  // const categories = await response.json(); finalement jai fait une variable globale donc pas besoin 
+
+//   // Option vide qui sera sélectionnée par défaut
+// const emptyOption = document.createElement("option");
+// emptyOption.value = "";      // valeur vide
+// emptyOption.textContent = "-- Choisir une catégorie --"; 
+// emptyOption.selected = true; // sélectionnée par défaut
+// emptyOption.disabled = true; // option non sélectionnable après choix
+// select.appendChild(emptyOption);
+
+  categories.forEach(categorie => {
+    const option = document.createElement("option");
+    option.value = categorie.id; 
+    option.textContent = categorie.name;
+    select.appendChild(option);
+  });
+
+    //pour Sélectionner automatiquement la première catégorie, sseulement si créé en html si en js alors il le fait tout seul 
+  // select.selectedIndex = 0;
+
+  // Revalider le formulaire après chargement des catégories
+  validateForm();
+}
+
+// PREVIEW PHOTO *******************************************************************
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---
 
@@ -338,35 +428,11 @@ async function envoyerNouveauProjet() {
   }
 }
 
-
 // Vérifier à chaque changement
 inputFile.addEventListener("change", validateForm);
 titreInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);
 
-
-// --- CHARGER LES CATÉGORIES DANS LE SELECT ---
-
-async function loadCategories() {
-  const select = document.querySelector("#categorie");
-  select.innerHTML = ""; // on vide le select
-
-  const response = await fetch(urlCategories);
-  const categories = await response.json();
-
-  categories.forEach(cat => {
-    const option = document.createElement("option");
-    option.value = cat.id; // IMPORTANT : ID numérique
-    option.textContent = cat.name;
-    select.appendChild(option);
-  });
-
-    // Sélectionner automatiquement la première catégorie
-  select.selectedIndex = 0;
-// obligatoire ?
-  // Revalider le formulaire après chargement des catégories
-  validateForm();
-}
 
 
 function resetForm() {
@@ -388,85 +454,4 @@ function resetForm() {
 
   // Cacher le message d’erreur
   hideFormError();
-}
-
-// fonction image dans modale :
-
-    const modalGallery = document.querySelector(".modal-gallery");
-
-  function genererModalGallery(works){
-modalGallery.innerHTML = "";
-        for (let i= 0; i < works.length; i++) {
-
-        const work = works[i];
-
-          const figure = document.createElement("figure")
-          modalGallery.appendChild(figure)
-
-          const trash = document.createElement("i");
-    trash.classList.add("fa-solid", "fa-trash-can", "trash-icon");
-    trash.dataset.id = work.id; // ← indispensable
-trash.addEventListener("click", deleteWork); // ← on attache l’event ici
-
-          const imageElement = document.createElement("img");
-          imageElement.src = work.imageUrl; 
-           figure.appendChild(imageElement);
-    figure.appendChild(trash);
-        }
-    }
-
-
-
-    // modale ajout de photo 
-const modalGallerySection = document.querySelector("#modal-gallery");
-const modalAjoutPhoto = document.querySelector("#modalajoutphoto");
-const ajouterPhoto = document.querySelector("#ajouterPhoto");
-const retourgalerie = document.querySelector("#retourgalerie");
-
-ajouterPhoto.addEventListener("click", async (e) => {
-  e.preventDefault();
-  modalGallerySection.style.display = "none";
-  modalAjoutPhoto.style.display = "block";
-
-  await loadCategories();
-});
-
-retourgalerie.addEventListener("click",(e)=>{
-  e.preventDefault();
-   modalGallerySection.style.display = "block";
-  modalAjoutPhoto.style.display = "none";
-}
-);
-
-
-
-// supprimer works 
-
-async function deleteWork(event) {
-
-  const id = event.target.dataset.id;
-
-  const token = localStorage.getItem("token");
-
-  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Authorization": `Bearer ${token}`
-    }
-  });
-
-  if (response.ok) {
-
-    // supprimer du tableau works
-    works = works.filter(work => work.id != id);
-
-    // recharger la galerie principale
-    genererWorks(works);
-
-    // recharger la galerie modale
-    genererModalGallery(works);
-
-  } else {
-    console.log("Erreur suppression");
-  }
 }
