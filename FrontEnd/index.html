@@ -108,26 +108,20 @@
                 <i class="fa-regular fa-image"></i>
                 <button id="btn-add-photo">+ Ajouter photo</button>
                 <p>jpg, png : 4mo max</p>
-              </div>
 
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                style="display: none"
-              />
-              <img
-                id="preview"
-                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                alt=""
-                style="
-                  display: none;
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  border-radius: 10px;
-                "
-              />
+                <input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  style="display: none"
+                />
+                <img
+                  id="preview"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                  alt=""
+                  style="display: none"
+                />
+              </div>
 
               <form action="#">
                 <label for="titre-photo">Titre</label>
@@ -143,10 +137,10 @@
               </form>
 
               <div class="trait"></div>
-              <button id="btn-valider">Valider</button>
               <p id="form-error" style="color: red; display: none">
                 Veuillez remplir tous les champs.
               </p>
+              <button id="btn-valider">Valider</button>
             </section>
           </div>
         </aside>

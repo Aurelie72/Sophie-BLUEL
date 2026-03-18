@@ -332,13 +332,14 @@ function validateForm() {
   const categorie = categorieSelect.value;
 
   const isValid = file && titre && categorie;
-
+  if(isValid){
+  btnValider.style.backgroundColor = "#1D6154";
+  btnValider.style.borderColor = "#1D6154"
+  }
   return isValid;
 }
 
-// PREVIEW PHOTO *******************************************************************
-
-// --- AJOUT PHOTO : INPUT FILE + PREVIEW ---
+// --- AJOUT PHOTO : INPUT FILE + PREVIEW ---*******************************************************************
 
 const uploadZone = document.querySelector("#upload-zone");
 const inputFile = document.querySelector("#image");
@@ -370,7 +371,8 @@ inputFile.addEventListener("change", () => {
 
 function showFormError() {
   const error = document.querySelector("#form-error");
-  error.style.display = "block";
+  error.style.display = "flex";
+  error.style.justifyContent = "center";
 }
 
 function hideFormError() {
@@ -418,9 +420,7 @@ async function envoyerNouveauProjet() {
     genererWorks(works);
     genererModalGallery(works);
 
-    // Fermer la modale
     closeModal();
-// obligatoire ?
     resetForm();
 
   } else {

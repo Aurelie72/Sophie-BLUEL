@@ -63,7 +63,7 @@ function formulaireLogIn() {
     document.querySelector("#login").appendChild(errorMessage);
   }
   // on met le texte dedans
-  errorMessage.textContent = "Email ou mot de passe incorrect";
+  errorMessage.textContent = "Erreur dans l’identifiant ou le mot de passe";
 }
 //     } catch (error) {
 //   console.error(error);
