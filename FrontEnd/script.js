@@ -63,9 +63,20 @@ const buttonTous = document.createElement("button");
     // FILTRES 
 
   function filtres () {
+
+      function resetButtons() {
+    const allButtons = document.querySelectorAll(".buttons button");
+    allButtons.forEach(btn => {
+      btn.style.backgroundColor = "";
+      btn.style.color = "";
+    });
+  }
   let buttonObjet = document.querySelector(".buttons #objets");
   buttonObjet.addEventListener("click",() => {
    const workfilted = works.filter(function (work) {
+    resetButtons()
+     buttonObjet.style.backgroundColor = "#1D6154"
+     buttonObjet.style.color = "white";
     return work.category.name === "Objets";  
  } ) 
   genererWorks(workfilted);
@@ -74,6 +85,9 @@ const buttonTous = document.createElement("button");
 let buttonAppartement = document.querySelector(".buttons #appartements");
 buttonAppartement.addEventListener("click",() => {
 const workfilted = works.filter(function (work) {
+  resetButtons()
+   buttonAppartement.style.backgroundColor = "#1D6154"
+   buttonAppartement.style.color = "white";
 return work.category.name === "Appartements"; 
  } ) 
 genererWorks(workfilted);
@@ -82,6 +96,9 @@ genererWorks(workfilted);
    let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
 buttonHotelsRest.addEventListener("click",() => {
 const workfilted = works.filter(function (work) {
+  resetButtons()
+  buttonHotelsRest.style.backgroundColor = "#1D6154"
+  buttonHotelsRest.style.color = "white";
 return work.category.name === "Hotels & restaurants"; 
  } ) 
 genererWorks(workfilted);
@@ -89,9 +106,11 @@ genererWorks(workfilted);
 
  let buttonTous = document.querySelector(".buttons #tous");
 buttonTous.addEventListener("click",() => {
+  resetButtons()
+  buttonTous.style.backgroundColor = "#1D6154"
+   buttonTous.style.color = "white";
 genererWorks(works)
   });
-   
 }
 
 // Initialiser : les works, catégories et filtres : 
@@ -130,6 +149,11 @@ document.querySelector("#portfolio h2").insertAdjacentHTML(
    <a href="#modale1" class="js-modal">Modifier</a>
  </div>`
  );
+
+//  si je veux mode edition seulement sur pc :
+//  if (window.innerWidth >= 1024) {
+//   activerModeEdition();
+// }
 
  // DONNER DU STYLE VIA JS / POUR TITRE <section id="portfolio"> : **************
 const h2 = document.querySelector("#portfolio h2");
@@ -211,6 +235,14 @@ const closeModal = function(e){
 const stopPropagation = function (e){
   e.stopPropagation()
 }
+
+// fermer la modale avec esc :
+
+window.addEventListener("keydown", function(e){
+  if(e.key === "Escape" || e.key === "Esc"){
+    closeModal();
+  }
+});
 
 
 // fonction image dans modale :
@@ -334,21 +366,27 @@ function validateForm() {
   const isValid = file && titre && categorie;
   if(isValid){
   btnValider.style.backgroundColor = "#1D6154";
-  btnValider.style.borderColor = "#1D6154"
+  btnValider.style.borderColor = "#1D6154";
+  } else {
+  btnValider.style.backgroundColor = "#A7A7A7";
+  btnValider.style.borderColor = "#A7A7A7";
   }
   return isValid;
 }
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---*******************************************************************
+                        // A revoir *********
+
 
 const uploadZone = document.querySelector("#upload-zone");
 const inputFile = document.querySelector("#image");
 const preview = document.querySelector("#preview");
 const btnAddPhoto = document.querySelector("#btn-add-photo");
 
-// Ouvre l'explorateur de fichiers
+// jouvre l'explorateur de fichiers
 btnAddPhoto.addEventListener("click", (e) => {
   e.preventDefault();
+  // je déclenche manuellement le clique sur inputFile :
   inputFile.click();
 });
 
@@ -359,6 +397,8 @@ inputFile.addEventListener("change", () => {
 
   const url = URL.createObjectURL(file);
 
+                        // ******************
+
   // Afficher la preview
   preview.src = url;
   preview.style.display = "block";
@@ -368,15 +408,15 @@ inputFile.addEventListener("change", () => {
   uploadZone.querySelector("button").style.display = "none";
   uploadZone.querySelector("p").style.display = "none";
 });
+const error = document.querySelector("#form-error");
 
 function showFormError() {
-  const error = document.querySelector("#form-error");
   error.style.display = "flex";
   error.style.justifyContent = "center";
 }
 
 function hideFormError() {
-  const error = document.querySelector("#form-error");
+  // const error = document.querySelector("#form-error");
   error.style.display = "none";
 }
 
@@ -385,11 +425,11 @@ btnValider.addEventListener("click", (e) => {
 
   if (!validateForm()) {
     showFormError();
-    return;
   }
-
+else{
   hideFormError();
-  envoyerNouveauProjet(); // étape suivante
+  envoyerNouveauProjet(); 
+}
 });
 
 // --- ENVOYER LE NOUVEAU PROJET À L’API ---
@@ -397,17 +437,18 @@ btnValider.addEventListener("click", (e) => {
 async function envoyerNouveauProjet() {
   const token = localStorage.getItem("token");
 
-  const formData = new FormData();
-  formData.append("image", inputFile.files[0]);
-  formData.append("title", titreInput.value);
-  formData.append("category", categorieSelect.value);
+  const nouveauWork = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
+  nouveauWork.append("image", inputFile.files[0]);
+  nouveauWork.append("title", titreInput.value);
+  nouveauWork.append("category", categorieSelect.value);
+// append() sert à ajouter un champ dans un objet 
 
   const response = await fetch(urlWorks, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`
     },
-    body: formData
+    body: nouveauWork
   });
 
   if (response.ok) {
@@ -434,22 +475,20 @@ titreInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);
 
 function resetForm() {
-  // Réinitialiser l’input file
+  
   inputFile.value = "";
   preview.src = "";
   preview.style.display = "none";
 
-  // Réafficher les éléments internes du cadre gris
-  uploadZone.querySelector("i").style.display = "block";
+   uploadZone.querySelector("i").style.display = "block";
   uploadZone.querySelector("button").style.display = "block";
   uploadZone.querySelector("p").style.display = "block";
 
-  // Réinitialiser les champs texte et select
-  titreInput.value = "";
+   titreInput.value = "";
 
-  // Désactiver le bouton Valider
-  btnValider.disabled = true;
+   btnValider.style.backgroundColor = "#A7A7A7";
+  btnValider.style.borderColor = "#A7A7A7";
 
-  // Cacher le message d’erreur
-  hideFormError();
+    hideFormError();
 }
+

@@ -157,10 +157,10 @@ de gérer facilement la largeur (width) */
 	height: 38px;
 	padding: 40px 0;
 }
-#portfolio .buttons #tous{
+/* #portfolio .buttons #tous{
 	background-color: #1D6154;
 	color: white;
-}
+} */
 
 #portfolio .buttons button{
 	cursor: pointer;
@@ -313,6 +313,17 @@ footer nav ul {
 
 /* /* MODALE partie 1 * */
 
+/* transition : */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideFromTop {
+  from { transform: translateY(-50px); }
+  to { transform: translateY(0); }
+}
+
 .modal {
   display: flex;
   justify-content: center;        
@@ -320,14 +331,15 @@ footer nav ul {
   position: fixed;
   top: 0;
   left: 0;                        /* nécessaire pour couvrir tout l'écran */
-  width: 100vw;                    /* toute la largeur de l'écran */
+  width: 100vw;                    /* toute la largeur de l'écran meme si le parent na pas de w definit  on utilise % quand le parent a une largeur definie, 100vh = 100% */
   height: 100vh;                   /* toute la hauteur de l'écran */
   background: rgba(0, 0, 0, 0.8); 
   z-index: 1000;                   /* au-dessus du reste */
+  animation: fadeIn 0.3s both; /* appliquer les animations */
 }
 
 .modal-wrapper {
-  position: relative;              /* pour bouton X */
+  position: relative;              /* pour mon bouton X */
   background-color: #fff;
   width: 635px;                    
   height: 670px;                   
@@ -337,6 +349,7 @@ footer nav ul {
 overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DESCENDRE*/
   border-radius: 10px 10px;              
   box-sizing: border-box;           /* padding inclus dans width/height */
+  animation: slideFromTop 0.5s both; /* appliquer les animations */
 }
 
 /* croix pour fermer  */
