@@ -246,7 +246,7 @@ label {
 
 input[type="submit"],
 button[type="submit"],
-#ajouterPhoto{
+#addPicture{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -280,13 +280,13 @@ footer nav ul {
 
 /* Style mode édition :  */
 
-#titre{
+#title{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 }
-#bandeaunoir{
+#edit-banner{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -300,18 +300,18 @@ footer nav ul {
     width: 100%; 
     margin: 0;
 }
-/* class ajoutée via js pour espacer bandeau et titre  */
+/* class ajoutée via js pour espacer bandeau et title  */
 .bandeau{
 	margin-top: 100px;
 }
 
-#modifier{
+#edit{
 	/* style via JS  */
 	display: flex;
 	gap: 5px;
 }
 
-/* /* MODALE partie 1 * */
+/* /* modal partie 1 * */
 
 /* transition : */
 
@@ -362,7 +362,7 @@ overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DES
 	background-color: #fff;
 	cursor: pointer;
 }
-.titremodale{
+.titlemodal{
   text-align: center;
   width: 100%;
   font-size: 1.5em;
@@ -411,21 +411,21 @@ overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DES
     background-color: #B3B3B3;
 }
 /* Centrer le bouton Ajouter une photo */
-#ajouterPhoto,
-#btn-valider{
+#addPicture,
+#btn-Validate{
   display: block; 
 }
 
-/* Modale partie 2 */
+/* modal partie 2 */
 
-#modalajoutphoto{
+#modalAddPhoto{
 	margin: 0;
 }
-#modalajoutphoto h3{
+#modalAddPhoto h3{
 margin: 30px auto;
 }
 
-#retourgalerie{
+#back{
 	border: none;
 	font-size: 18px;
 	position: absolute;
@@ -465,7 +465,7 @@ margin: 30px auto;
 	font-size: 76px;
 }
 
-#modalajoutphoto form{
+#modalAddPhoto form{
 	width: 75%;
 	margin: 0 auto;
 }
@@ -483,7 +483,7 @@ select{
 	left: 0;
 }
 
-#btn-valider{
+#btn-Validate{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;

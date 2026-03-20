@@ -2,7 +2,7 @@
 
 let urlLogin = "http://localhost:5678/api/users/login"
 
-function formulaireLogIn() {
+function logInForm() {
 
   const logIn = document.querySelector("#login");
 
@@ -82,7 +82,7 @@ function formulaireLogIn() {
 // }
   });
 }
-formulaireLogIn()
+logInForm()
 
 // Style login en gras : 
 const logbold = document.getElementById("logbold");

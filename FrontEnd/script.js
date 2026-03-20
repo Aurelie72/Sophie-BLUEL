@@ -60,9 +60,9 @@ const buttonTous = document.createElement("button");
    });
   }
 
-    // FILTRES 
+    // filters 
 
-  function filtres () {
+  function filters () {
 
       function resetButtons() {
     const allButtons = document.querySelectorAll(".buttons button");
@@ -73,35 +73,35 @@ const buttonTous = document.createElement("button");
   }
   let buttonObjet = document.querySelector(".buttons #objets");
   buttonObjet.addEventListener("click",() => {
-   const workfilted = works.filter(function (work) {
+   const filteredWorks = works.filter(function (work) {
     resetButtons()
      buttonObjet.style.backgroundColor = "#1D6154"
      buttonObjet.style.color = "white";
     return work.category.name === "Objets";  
  } ) 
-  genererWorks(workfilted);
+  genererWorks(filteredWorks);
   })
 
 let buttonAppartement = document.querySelector(".buttons #appartements");
 buttonAppartement.addEventListener("click",() => {
-const workfilted = works.filter(function (work) {
+const filteredWorks = works.filter(function (work) {
   resetButtons()
    buttonAppartement.style.backgroundColor = "#1D6154"
    buttonAppartement.style.color = "white";
 return work.category.name === "Appartements"; 
  } ) 
-genererWorks(workfilted);
+genererWorks(filteredWorks);
   })
 
    let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
 buttonHotelsRest.addEventListener("click",() => {
-const workfilted = works.filter(function (work) {
+const filteredWorks = works.filter(function (work) {
   resetButtons()
   buttonHotelsRest.style.backgroundColor = "#1D6154"
   buttonHotelsRest.style.color = "white";
 return work.category.name === "Hotels & restaurants"; 
  } ) 
-genererWorks(workfilted);
+genererWorks(filteredWorks);
   })
 
  let buttonTous = document.querySelector(".buttons #tous");
@@ -113,7 +113,7 @@ genererWorks(works)
   });
 }
 
-// Initialiser : les works, catégories et filtres : 
+// Initialiser : les works, catégories et filters : 
 
 async function init() {
  categories = await fetch(urlCategories).then(response => response.json());
@@ -121,22 +121,22 @@ async function init() {
 
  genererWorks(works)
  genererBoutons();
- filtres ()
+ filters ()
 }
   init().then(() => {
  const token = localStorage.getItem("token");
  if (token) {
-  modeEdition();
+  editMode();
  }
 });
 
-function modeEdition () {
+function editMode () {
 
 document.querySelector(".buttons").innerHTML= ""
 document.querySelector("header").insertAdjacentHTML(
   "afterbegin", 
   // car sinon avec inner efface le contenu et met le bandeau apres sophie 
-    `<section id="bandeaunoir">
+    `<section id="edit-banner">
     <p><i class="fa-solid fa-pen-to-square"></i></p>
     <p>Mode édition</p>
     </section>
@@ -144,35 +144,35 @@ document.querySelector("header").insertAdjacentHTML(
  document.body.classList.add("bandeau");
 document.querySelector("#portfolio h2").insertAdjacentHTML(
   "afterend",
- `<div id="modifier">
+ `<div id="edit">
    <p><i class="fa-solid fa-pen-to-square"></i></p>
-   <a href="#modale1" class="js-modal">Modifier</a>
+   <a href="#modal1" class="js-modal">Modifier</a>
  </div>`
  );
 
 //  si je veux mode edition seulement sur pc :
 //  if (window.innerWidth >= 1024) {
-//   activerModeEdition();
+//   activereditMode();
 // }
 
- // DONNER DU STYLE VIA JS / POUR TITRE <section id="portfolio"> : **************
+ // DONNER DU STYLE VIA JS / POUR title <section id="portfolio"> : **************
 const h2 = document.querySelector("#portfolio h2");
-const modifier = document.querySelector("#modifier");
+const edit = document.querySelector("#edit");
 const portfolio = document.querySelector("#portfolio");
 
-const conteneurH2EtModifier = document.createElement("div")
+const divH2AndEdit = document.createElement("div")
 
-conteneurH2EtModifier.style.display = "flex";
-conteneurH2EtModifier.style.justifyContent = "center";
-conteneurH2EtModifier.style.gap = "15px";
+divH2AndEdit.style.display = "flex";
+divH2AndEdit.style.justifyContent = "center";
+divH2AndEdit.style.gap = "15px";
 // aligner parfaitement malgres différente taille de police :
-conteneurH2EtModifier.style.alignItems = "baseline"; 
+divH2AndEdit.style.alignItems = "baseline"; 
 
-// portfolio.appendChild(conteneurH2EtModifier); pour le mettre au debut :
-portfolio.insertAdjacentElement("afterbegin", conteneurH2EtModifier);
+// portfolio.appendChild(divH2AndEdit); pour le mettre au debut :
+portfolio.insertAdjacentElement("afterbegin", divH2AndEdit);
 
-conteneurH2EtModifier.appendChild(h2);
-conteneurH2EtModifier.appendChild(modifier);
+divH2AndEdit.appendChild(h2);
+divH2AndEdit.appendChild(edit);
 
 // ************************************************************************************
 
@@ -194,7 +194,7 @@ ouvrirLaModal.addEventListener("click", openModal);
 }
 
 
-// MODALE *********************************************************************************
+// modal *********************************************************************************
 
 let modal = null
 
@@ -203,9 +203,9 @@ const openModal= function(e){
   // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas 
   modal = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
 
-    // Réinitialisation de la modale
+    // Réinitialisation de la modal
   modalGallerySection.style.display = "block";
-  modalAjoutPhoto.style.display = "none";
+  modalAddPhoto.style.display = "none";
 
 
   // pour retirer le display none qui cache au depart : 
@@ -236,7 +236,7 @@ const stopPropagation = function (e){
   e.stopPropagation()
 }
 
-// fermer la modale avec esc :
+// fermer la modal avec esc :
 
 window.addEventListener("keydown", function(e){
   if(e.key === "Escape" || e.key === "Esc"){
@@ -245,7 +245,7 @@ window.addEventListener("keydown", function(e){
 });
 
 
-// fonction image dans modale :
+// fonction image dans modal :
 
     const modalGallery = document.querySelector(".modal-gallery");
 
@@ -272,7 +272,7 @@ trash.addEventListener("click", deleteWork);
     }
 // *************************************************************************************
 
-// SUPPRIMER WORKS dans la modale :
+// SUPPRIMER WORKS dans la modal :
 
 async function deleteWork(event) {
   const id = event.target.dataset.id;
@@ -291,7 +291,7 @@ async function deleteWork(event) {
     works = works.filter(work => work.id != id);
     // recharger la galerie principale
     genererWorks(works);
-    // recharger la galerie modale
+    // recharger la galerie modal
     genererModalGallery(works);
 
   } else {
@@ -300,24 +300,24 @@ async function deleteWork(event) {
 }
 
 
-    // Modale Partie 2 Ajout de Photo ********************************************************
+    // modal Partie 2 Ajout de Photo ********************************************************
 const modalGallerySection = document.querySelector("#modal-gallery");
-const modalAjoutPhoto = document.querySelector("#modalajoutphoto");
-const ajouterPhoto = document.querySelector("#ajouterPhoto");
-const retourgalerie = document.querySelector("#retourgalerie");
+const modalAddPhoto = document.querySelector("#modalAddPhoto");
+const addPicture = document.querySelector("#addPicture");
+const back = document.querySelector("#back");
 
-ajouterPhoto.addEventListener("click", async (e) => {
+addPicture.addEventListener("click", async (e) => {
   e.preventDefault(); //pas obligé car i ne fait pas daction 
   modalGallerySection.style.display = "none";
-  modalAjoutPhoto.style.display = "block";
+  modalAddPhoto.style.display = "block";
 
   await loadCategories();
 });
 
-retourgalerie.addEventListener("click",(e)=>{
+back.addEventListener("click",(e)=>{
   e.preventDefault();
    modalGallerySection.style.display = "block";
-  modalAjoutPhoto.style.display = "none";
+  modalAddPhoto.style.display = "none";
 }
 );
 
@@ -348,28 +348,28 @@ async function loadCategories() {
     //pour Sélectionner automatiquement la première catégorie, sseulement si créé en html si en js alors il le fait tout seul 
   // select.selectedIndex = 0;
 
-  // Revalider le formulaire après chargement des catégories
+  // ReValidate le formulaire après chargement des catégories
   validateForm();
 }
 
 // --- VALIDATION DU FORMULAIRE ---
 
-const titreInput = document.querySelector("#titre-photo");
+const titleInput = document.querySelector("#title-photo");
 const categorieSelect = document.querySelector("#categorie");
-const btnValider = document.querySelector("#btn-valider");
+const btnValidate = document.querySelector("#btn-Validate");
 
 function validateForm() {
   const file = inputFile.files[0];
-  const titre = titreInput.value.trim(); // trim cest pour retirer les espaces
+  const title = titleInput.value.trim(); // trim cest pour retirer les espaces
   const categorie = categorieSelect.value;
 
-  const isValid = file && titre && categorie;
+  const isValid = file && title && categorie;
   if(isValid){
-  btnValider.style.backgroundColor = "#1D6154";
-  btnValider.style.borderColor = "#1D6154";
+  btnValidate.style.backgroundColor = "#1D6154";
+  btnValidate.style.borderColor = "#1D6154";
   } else {
-  btnValider.style.backgroundColor = "#A7A7A7";
-  btnValider.style.borderColor = "#A7A7A7";
+  btnValidate.style.backgroundColor = "#A7A7A7";
+  btnValidate.style.borderColor = "#A7A7A7";
   }
   return isValid;
 }
@@ -420,7 +420,7 @@ function hideFormError() {
   error.style.display = "none";
 }
 
-btnValider.addEventListener("click", (e) => {
+btnValidate.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (!validateForm()) {
@@ -428,19 +428,19 @@ btnValider.addEventListener("click", (e) => {
   }
 else{
   hideFormError();
-  envoyerNouveauProjet(); 
+  sendNewWork(); 
 }
 });
 
-// --- ENVOYER LE NOUVEAU PROJET À L’API ---
+// --- send LE NOUVEAU PROJET À L’API ---
 
-async function envoyerNouveauProjet() {
+async function sendNewWork() {
   const token = localStorage.getItem("token");
 
-  const nouveauWork = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
-  nouveauWork.append("image", inputFile.files[0]);
-  nouveauWork.append("title", titreInput.value);
-  nouveauWork.append("category", categorieSelect.value);
+  const newWork = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
+  newWork.append("image", inputFile.files[0]);
+  newWork.append("title", titleInput.value);
+  newWork.append("category", categorieSelect.value);
 // append() sert à ajouter un champ dans un objet 
 
   const response = await fetch(urlWorks, {
@@ -448,7 +448,7 @@ async function envoyerNouveauProjet() {
     headers: {
       "Authorization": `Bearer ${token}`
     },
-    body: nouveauWork
+    body: newWork
   });
 
   if (response.ok) {
@@ -471,7 +471,7 @@ async function envoyerNouveauProjet() {
 
 // Vérifier à chaque changement
 inputFile.addEventListener("change", validateForm);
-titreInput.addEventListener("input", validateForm);
+titleInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);
 
 function resetForm() {
@@ -484,10 +484,10 @@ function resetForm() {
   uploadZone.querySelector("button").style.display = "block";
   uploadZone.querySelector("p").style.display = "block";
 
-   titreInput.value = "";
+   titleInput.value = "";
 
-   btnValider.style.backgroundColor = "#A7A7A7";
-  btnValider.style.borderColor = "#A7A7A7";
+   btnValidate.style.backgroundColor = "#A7A7A7";
+  btnValidate.style.borderColor = "#A7A7A7";
 
     hideFormError();
 }

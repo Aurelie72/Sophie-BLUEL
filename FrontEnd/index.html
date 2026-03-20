@@ -23,12 +23,12 @@
   </head>
   <body>
     <header id="header-index">
-      <!-- <section id="bandeaunoir">
+      <!-- <section id="edit-banner">
         <!- <p><i class="fa-solid fa-pen-to-square"></i></p>
         <p>Mode édition</p> -->
       <!-- </section> -> -->
 
-      <section id="titre">
+      <section id="title">
         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
         <nav>
           <ul>
@@ -76,14 +76,14 @@
       <section id="portfolio">
         <h2>Mes Projets</h2>
 
-        <!-- MODALE  -->
+        <!-- modal  -->
 
-        <!-- <a href="#modale1" class="js-modal">Modifier la modale</a> -->
+        <!-- <a href="#modal1" class="js-modal">Modifier la modal</a> -->
         <aside
-          id="modale1"
+          id="modal1"
           class="modal"
           aria-hidden="true"
-          aria-labelledby="titremodale"
+          aria-labelledby="titlemodal"
           style="display: none"
         >
           <div class="modal-wrapper js-modal-stop">
@@ -91,17 +91,17 @@
 
             <!-- SECTION GALERIE -->
             <section id="modal-gallery">
-              <h3 id="titremodale" class="titremodale">Galerie photo</h3>
+              <h3 id="titlemodal" class="titlemodal">Galerie photo</h3>
               <div class="modal-gallery"></div>
               <div class="trait"></div>
-              <button id="ajouterPhoto">Ajouter une photo</button>
+              <button id="addPicture">Ajouter une photo</button>
             </section>
 
             <!-- SECTION AJOUT PHOTO -->
-            <section id="modalajoutphoto" style="display: none">
-              <i class="fa-solid fa-arrow-left" id="retourgalerie"></i>
+            <section id="modalAddPhoto" style="display: none">
+              <i class="fa-solid fa-arrow-left" id="back"></i>
               <!-- <button class="js-modal-close">X</button> -->
-              <h3 class="titremodale">Ajout Photo</h3>
+              <h3 class="titlemodal">Ajout Photo</h3>
 
               <div id="upload-zone">
                 <i class="fa-regular fa-image"></i>
@@ -123,8 +123,8 @@
               </div>
 
               <form action="#">
-                <label for="titre-photo">Titre</label>
-                <input type="text" id="titre-photo" />
+                <label for="title-photo">title</label>
+                <input type="text" id="title-photo" />
                 <label for="categorie">Catégorie</label>
                 <select id="categorie">
                   <!-- <option value="Hotels & restaurants">
@@ -139,7 +139,7 @@
               <p id="form-error" style="color: red; display: none">
                 Veuillez remplir tous les champs.
               </p>
-              <button id="btn-valider">Valider</button>
+              <button id="btn-Validate">Valider</button>
             </section>
           </div>
         </aside>
