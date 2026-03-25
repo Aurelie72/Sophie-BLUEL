@@ -130,6 +130,8 @@ async function init() {
  }
 });
 
+
+
 function editMode () {
 
 document.querySelector(".buttons").innerHTML= ""
@@ -353,7 +355,6 @@ async function loadCategories() {
 }
 
 // --- VALIDATION DU FORMULAIRE ---
-
 const titleInput = document.querySelector("#title-photo");
 const categorieSelect = document.querySelector("#categorie");
 const btnValidate = document.querySelector("#btn-Validate");
@@ -365,8 +366,8 @@ function validateForm() {
 
   const isValid = file && title && categorie;
   if(isValid){
-  btnValidate.style.backgroundColor = "#1D6154";
-  btnValidate.style.borderColor = "#1D6154";
+    btnValidate.style.backgroundColor = "#1D6154";
+    btnValidate.style.borderColor = "#1D6154";
   } else {
   btnValidate.style.backgroundColor = "#A7A7A7";
   btnValidate.style.borderColor = "#A7A7A7";
@@ -376,7 +377,7 @@ function validateForm() {
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---*******************************************************************
                         // A revoir *********
-
+                        
 
 const uploadZone = document.querySelector("#upload-zone");
 const inputFile = document.querySelector("#image");
@@ -393,8 +394,14 @@ btnAddPhoto.addEventListener("click", (e) => {
 // Affiche la preview et masque uniquement le contenu interne
 inputFile.addEventListener("change", () => {
   const file = inputFile.files[0];
+  //   Quand l’utilisateur choisit un fichier via ton <input type="file">, le navigateur stocke les fichiers sélectionnés dans une liste appelée inputFile.files.
+  // inputFile.files → c’est une FileList, une sorte de tableau.
+// inputFile.files[0] → c’est le premier fichier choisi.
+// const file = … → tu récupères ce fichier dans une variable pour pouvoir l’utiliser.
   if (!file) return;
 
+//   Le navigateur bloque l’accès direct aux fichiers locaux pour des raisons de sécurité.
+// Donc il te donne une fausse URL, mais qui pointe vers une copie du fichier en mémoire.
   const url = URL.createObjectURL(file);
 
                         // ******************
@@ -408,6 +415,7 @@ inputFile.addEventListener("change", () => {
   uploadZone.querySelector("button").style.display = "none";
   uploadZone.querySelector("p").style.display = "none";
 });
+
 const error = document.querySelector("#form-error");
 
 function showFormError() {
@@ -422,35 +430,35 @@ function hideFormError() {
 
 btnValidate.addEventListener("click", (e) => {
   e.preventDefault();
-
+  
   if (!validateForm()) {
     showFormError();
   }
-else{
-  hideFormError();
-  sendNewWork(); 
-}
+  else{
+    hideFormError();
+    sendNewWork(); 
+  }
 });
 
 // --- send LE NOUVEAU PROJET À L’API ---
 
 async function sendNewWork() {
   const token = localStorage.getItem("token");
-
-  const newWork = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
-  newWork.append("image", inputFile.files[0]);
-  newWork.append("title", titleInput.value);
-  newWork.append("category", categorieSelect.value);
-// append() sert à ajouter un champ dans un objet 
-
+  
+  const formData = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
+  formData.append("image", inputFile.files[0]);
+  formData.append("title", titleInput.value);
+  formData.append("category", categorieSelect.value);
+  // append() sert à ajouter un champ dans un objet 
+  
   const response = await fetch(urlWorks, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`
     },
-    body: newWork
+    body: formData
   });
-
+  
   if (response.ok) {
     const newWork = await response.json();
 
@@ -470,6 +478,7 @@ async function sendNewWork() {
 }
 
 // Vérifier à chaque changement
+// Tu appelles validateForm à chaque fois pour vérifier si le formulaire est complet.
 inputFile.addEventListener("change", validateForm);
 titleInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);

@@ -17,7 +17,7 @@ function logInForm() {
     const emailValue = document.querySelector("#email").value;
     const passwordValue = document.querySelector("#password").value;
 
-    // try {
+    try {
 
       // requête POST vers l'API :
       const response = await fetch(urlLogin, {
@@ -65,21 +65,21 @@ function logInForm() {
   // on met le texte dedans
   errorMessage.textContent = "Erreur dans l’identifiant ou le mot de passe";
 }
-//     } catch (error) {
-//   console.error(error);
+    } catch (error) {
+  console.error(error);
 
-//   let errorMessage = document.querySelector(".error-message");
+  let errorMessage = document.querySelector(".error-message");
 
-//   // Si l'élément n'existe pas, on le crée
-//   if (!errorMessage) {
-//     errorMessage = document.createElement("p");
-//     errorMessage.classList.add("error-message");
-//     document.querySelector("#login").appendChild(errorMessage);
-//   }
+  // Si l'élément n'existe pas, on le crée
+  if (!errorMessage) {
+    errorMessage = document.createElement("p");
+    errorMessage.classList.add("error-message");
+    document.querySelector("#login").appendChild(errorMessage);
+  }
 
-//   // On met le texte dedans
-//   errorMessage.textContent = "Une erreur est survenue.";
-// }
+  // On met le texte dedans
+  errorMessage.textContent = "Une erreur est survenue.";
+}
   });
 }
 logInForm()
