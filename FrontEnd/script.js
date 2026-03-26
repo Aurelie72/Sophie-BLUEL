@@ -1,277 +1,333 @@
 // je crée des variables pour mes liens :
-let urlCategories = "http://localhost:5678/api/categories"
-let urlWorks = "http://localhost:5678/api/works"
+const urlCategories = "http://localhost:5678/api/categories";
+const urlWorks = "http://localhost:5678/api/works";
 
-// pour que works et catégories existe en dehors de mes fonctions et pouvoir les réutiliser, globales 
+// pour que works et catégories existe en dehors de mes fonctions et pouvoir les réutiliser, globales
 let works = [];
 let categories = [];
 
 // Afficher les works :
-function genererWorks(works){
- const gallery = document.querySelector(".gallery");
+function genererWorks(works) {
+  const gallery = document.querySelector(".gallery");
 
- gallery.innerHTML = "";
+  gallery.innerHTML = "";
 
- for (let i = 0; i < works.length; i++) {
- const work = works[i];
+  for (let i = 0; i < works.length; i++) {
+    const work = works[i];
 
-  // ou works.forEach(function(work){ ou works.forEach(work => {
+    // ou works.forEach(function(work){ ou works.forEach(work => {
 
-  const figure = document.createElement("figure");
-  gallery.appendChild(figure);
+    const figure = document.createElement("figure");
+    gallery.appendChild(figure);
 
-  const imageElement = document.createElement("img");
-  imageElement.src = work.imageUrl;
-  figure.appendChild(imageElement);
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    figure.appendChild(imageElement);
 
-  const titleElement = document.createElement("figcaption");
-  titleElement.textContent = work.title;
-  figure.appendChild(titleElement);
- }
+    const titleElement = document.createElement("figcaption");
+    titleElement.textContent = work.title;
+    figure.appendChild(titleElement);
+  }
 }
 
-    // GENERER les BOUTONS DYNAMIQUEMENT sans doublons 
+// GENERER les BOUTONS DYNAMIQUEMENT sans doublons
 
- const divBouttons = document.querySelector(".buttons");
-  function genererBoutons (){
-
+const divBouttons = document.querySelector(".buttons");
+function genererBoutons() {
   // ajout du bouton TOUS :
-const buttonTous = document.createElement("button");
-       buttonTous.textContent = "Tous"; 
-       buttonTous.id = "tous";
-       divBouttons.appendChild(buttonTous);
+  const buttonTous = document.createElement("button");
+  buttonTous.textContent = "Tous";
+  buttonTous.id = "tous";
+  divBouttons.appendChild(buttonTous);
 
- categories.forEach(categorie => {
- const bouton = document.createElement("button");
- bouton.textContent = categorie.name;
+  categories.forEach((categorie) => {
+    const bouton = document.createElement("button");
+    bouton.textContent = categorie.name;
+    bouton.dataset.id = categorie.id;
 
- // ou bouton.dataset.id = categorie.id;
+    // if (categorie.name === "Objets") {
+    //   bouton.id = "objets";
+    // } else if (categorie.name === "Appartements") {
+    //   bouton.id = "appartements";
+    // } else if (categorie.name === "Hotels & restaurants") {
+    //   bouton.id = "hotelsrest";
+    // }
+    divBouttons.appendChild(bouton);
+  });
+}
 
-  if (categorie.name === "Objets") {
-   bouton.id = "objets";
-  }
-  else if (categorie.name === "Appartements") {
-   bouton.id = "appartements";
-  }
-  else if (categorie.name === "Hotels & restaurants") {
-   bouton.id = "hotelsrest";
-  }
-       divBouttons.appendChild(bouton);    
-   });
-  }
+// filters
 
-    // filters 
-
-  function filters () {
-
-      function resetButtons() {
-    const allButtons = document.querySelectorAll(".buttons button");
-    allButtons.forEach(btn => {
+function filters() {
+  const allButtons = document.querySelectorAll(".buttons button");
+  function resetButtons() {
+    allButtons.forEach((btn) => {
       btn.style.backgroundColor = "";
       btn.style.color = "";
     });
   }
-  let buttonObjet = document.querySelector(".buttons #objets");
-  buttonObjet.addEventListener("click",() => {
-   const filteredWorks = works.filter(function (work) {
-    resetButtons()
-     buttonObjet.style.backgroundColor = "#1D6154"
-     buttonObjet.style.color = "white";
-    return work.category.name === "Objets";  
- } ) 
-  genererWorks(filteredWorks);
-  })
+  allButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      resetButtons();
 
-let buttonAppartement = document.querySelector(".buttons #appartements");
-buttonAppartement.addEventListener("click",() => {
-const filteredWorks = works.filter(function (work) {
-  resetButtons()
-   buttonAppartement.style.backgroundColor = "#1D6154"
-   buttonAppartement.style.color = "white";
-return work.category.name === "Appartements"; 
- } ) 
-genererWorks(filteredWorks);
-  })
+      button.style.backgroundColor = "#1D6154";
+      button.style.color = "white";
 
-   let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
-buttonHotelsRest.addEventListener("click",() => {
-const filteredWorks = works.filter(function (work) {
-  resetButtons()
-  buttonHotelsRest.style.backgroundColor = "#1D6154"
-  buttonHotelsRest.style.color = "white";
-return work.category.name === "Hotels & restaurants"; 
- } ) 
-genererWorks(filteredWorks);
-  })
+      const categoryId = button.dataset.id;
 
- let buttonTous = document.querySelector(".buttons #tous");
-buttonTous.addEventListener("click",() => {
-  resetButtons()
-  buttonTous.style.backgroundColor = "#1D6154"
-   buttonTous.style.color = "white";
-genererWorks(works)
+      if (!categoryId) {
+        // bouton "Tous"
+        genererWorks(works);
+      } else {
+        const filteredWorks = works.filter(
+          (work) => work.categoryId == categoryId,
+        );
+        genererWorks(filteredWorks);
+      }
+    });
   });
 }
+//   let buttonObjet = document.querySelector(".buttons #objets");
+//   buttonObjet.addEventListener("click", () => {
+//     const filteredWorks = works.filter(function (work) {
+//       resetButtons();
+//       buttonObjet.style.backgroundColor = "#1D6154";
+//       buttonObjet.style.color = "white";
+//       return work.category.name === "Objets";
+//     });
+//     genererWorks(filteredWorks);
+//   });
 
-// Initialiser : les works, catégories et filters : 
+//   let buttonAppartement = document.querySelector(".buttons #appartements");
+//   buttonAppartement.addEventListener("click", () => {
+//     const filteredWorks = works.filter(function (work) {
+//       resetButtons();
+//       buttonAppartement.style.backgroundColor = "#1D6154";
+//       buttonAppartement.style.color = "white";
+//       return work.category.name === "Appartements";
+//     });
+//     genererWorks(filteredWorks);
+//   });
 
-async function init() {
- categories = await fetch(urlCategories).then(response => response.json());
- works = await fetch(urlWorks).then(response => response.json());
+//   let buttonHotelsRest = document.querySelector(".buttons #hotelsrest");
+//   buttonHotelsRest.addEventListener("click", () => {
+//     const filteredWorks = works.filter(function (work) {
+//       resetButtons();
+//       buttonHotelsRest.style.backgroundColor = "#1D6154";
+//       buttonHotelsRest.style.color = "white";
+//       return work.category.name === "Hotels & restaurants";
+//     });
+//     genererWorks(filteredWorks);
+//   });
 
- genererWorks(works)
- genererBoutons();
- filters ()
-}
-  init().then(() => {
- const token = localStorage.getItem("token");
- if (token) {
-  editMode();
- }
-});
-
-
-
-function editMode () {
-
-document.querySelector(".buttons").innerHTML= ""
-document.querySelector("header").insertAdjacentHTML(
-  "afterbegin", 
-  // car sinon avec inner efface le contenu et met le bandeau apres sophie 
-    `<section id="edit-banner">
-    <p><i class="fa-solid fa-pen-to-square"></i></p>
-    <p>Mode édition</p>
-    </section>
- `);
- document.body.classList.add("bandeau");
-document.querySelector("#portfolio h2").insertAdjacentHTML(
-  "afterend",
- `<div id="edit">
-   <p><i class="fa-solid fa-pen-to-square"></i></p>
-   <a href="#modal1" class="js-modal">Modifier</a>
- </div>`
- );
-
-//  si je veux mode edition seulement sur pc :
-//  if (window.innerWidth >= 1024) {
-//   activereditMode();
+//   let buttonTous = document.querySelector(".buttons #tous");
+//   buttonTous.addEventListener("click", () => {
+//     resetButtons();
+//     buttonTous.style.backgroundColor = "#1D6154";
+//     buttonTous.style.color = "white";
+//     genererWorks(works);
+//   });
 // }
 
- // DONNER DU STYLE VIA JS / POUR title <section id="portfolio"> : **************
-const h2 = document.querySelector("#portfolio h2");
-const edit = document.querySelector("#edit");
-const portfolio = document.querySelector("#portfolio");
+// Initialiser : les works, catégories et filters :
 
-const divH2AndEdit = document.createElement("div")
+async function init() {
+  categories = await fetch(urlCategories).then((response) => response.json());
+  works = await fetch(urlWorks).then((response) => response.json());
 
-divH2AndEdit.style.display = "flex";
-divH2AndEdit.style.justifyContent = "center";
-divH2AndEdit.style.gap = "15px";
-// aligner parfaitement malgres différente taille de police :
-divH2AndEdit.style.alignItems = "baseline"; 
-
-// portfolio.appendChild(divH2AndEdit); pour le mettre au debut :
-portfolio.insertAdjacentElement("afterbegin", divH2AndEdit);
-
-divH2AndEdit.appendChild(h2);
-divH2AndEdit.appendChild(edit);
-
-// ************************************************************************************
-
-document.querySelector("#logbold").innerHTML= `logout`
-document.querySelector("#logbold").addEventListener("click", (e) => {
- e.preventDefault();
- localStorage.removeItem("token");
- location.reload(); 
- // window.location.reload();
- // window.location.href = "index.html";
-});
-// document.querySelectorAll(".js-modal").forEach(a => {
-//  a.addEventListener("click", openModal)
-// });
-// // jai un seul js modal alors par besoinde for each
- const ouvrirLaModal = document.querySelector(".js-modal");
-ouvrirLaModal.addEventListener("click", openModal);
-
+  genererWorks(works);
+  genererBoutons();
+  filters();
 }
+init().then(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    editMode();
+  }
+});
+// revoir les corrections :
+function editMode() {
+  // pour éviter les risques de duplications
+  if (document.querySelector("#edit-banner")) return;
+  document.querySelector(".buttons").innerHTML = "";
+  //   document.querySelector("header").insertAdjacentHTML(
+  //     "afterbegin",
+  //     // car sinon avec inner efface le contenu et met le bandeau apres sophie
+  //     `<section id="edit-banner">
+  //     <p><i class="fa-solid fa-pen-to-square"></i></p>
+  //     <p>Mode édition</p>
+  //     </section>
+  // //  `,
+  //   );
+  const header = document.querySelector("header");
 
+  const section = document.createElement("section");
+  section.id = "edit-banner";
+
+  const pIcon = document.createElement("p");
+  const icon = document.createElement("i");
+  icon.className = "fa-solid fa-pen-to-square";
+  pIcon.appendChild(icon);
+
+  const pText = document.createElement("p");
+  pText.textContent = "Mode édition";
+
+  section.appendChild(pIcon);
+  section.appendChild(pText);
+
+  header.prepend(section);
+
+  document.body.classList.add("bandeau");
+  //   document.querySelector("#portfolio h2").insertAdjacentHTML(
+  //     "afterend",
+  //     `<div id="edit">
+  //    <p><i class="fa-solid fa-pen-to-square"></i></p>
+  //    <a href="#modal1" class="js-modal">Modifier</a>
+  //  </div>`,
+  //   );
+  const portfolioTitle = document.querySelector("#portfolio h2");
+
+  const divEdit = document.createElement("div");
+  divEdit.id = "edit";
+
+  const pEditIcon = document.createElement("p");
+  const iconEdit = document.createElement("i");
+  iconEdit.className = "fa-solid fa-pen-to-square";
+  pEditIcon.appendChild(iconEdit);
+
+  const link = document.createElement("a");
+  link.href = "#modal1";
+  link.classList.add("js-modal");
+  link.textContent = "Modifier";
+
+  divEdit.appendChild(pEditIcon);
+  divEdit.appendChild(link);
+
+  portfolioTitle.insertAdjacentElement("afterend", divEdit);
+
+  //  si je veux mode edition seulement sur pc :
+  //  if (window.innerWidth >= 1024) {
+  //   activereditMode();
+  // }
+
+  // DONNER DU STYLE VIA JS / POUR title <section id="portfolio"> : **************
+  const h2 = document.querySelector("#portfolio h2");
+  const edit = document.querySelector("#edit");
+  const portfolio = document.querySelector("#portfolio");
+
+  const divH2AndEdit = document.createElement("div");
+
+  divH2AndEdit.style.display = "flex";
+  divH2AndEdit.style.justifyContent = "center";
+  divH2AndEdit.style.gap = "15px";
+  // aligner parfaitement malgres différente taille de police :
+  divH2AndEdit.style.alignItems = "baseline";
+
+  // portfolio.appendChild(divH2AndEdit); pour le mettre au debut :
+  portfolio.insertAdjacentElement("afterbegin", divH2AndEdit);
+
+  divH2AndEdit.appendChild(h2);
+  divH2AndEdit.appendChild(divEdit);
+
+  // ************************************************************************************
+
+  document.querySelector("#logbold").textContent = "logout";
+  document.querySelector("#logbold").addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    location.reload();
+    // window.location.reload();
+    // window.location.href = "index.html";
+  });
+  // document.querySelectorAll(".js-modal").forEach(a => {
+  //  a.addEventListener("click", openModal)
+  // });
+  // // jai un seul js modal alors par besoinde for each
+  const ouvrirLaModal = document.querySelector(".js-modal");
+  ouvrirLaModal.addEventListener("click", openModal);
+}
 
 // modal *********************************************************************************
 
-let modal = null
+let modal = null;
 
-const openModal= function(e){
-  e.preventDefault()
-  // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas 
-  modal = document.querySelector(e.target.closest(".js-modal").getAttribute("href"))
+const openModal = function (e) {
+  e.preventDefault();
+  // const target= document.querySelector(e.target.getAttribute("href")) a modifier car si je clique a cote ca fonctionne pas
+  modal = document.querySelector(
+    e.target.closest(".js-modal").getAttribute("href"),
+  );
 
-    // Réinitialisation de la modal
+  // Réinitialisation de la modal
   modalGallerySection.style.display = "block";
   modalAddPhoto.style.display = "none";
 
+  // pour retirer le display none qui cache au depart :
+  modal.style.display = null;
+  modal.removeAttribute("aria-hidden");
+  modal.setAttribute("aria-modal", true);
 
-  // pour retirer le display none qui cache au depart : 
-  modal.style.display = null
-  modal.removeAttribute("aria-hidden")
-  modal.setAttribute("aria-modal",true )
- 
   genererModalGallery(works);
 
-  modal.addEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close").addEventListener('click',closeModal)
-  modal.querySelector(".js-modal-stop").addEventListener('click',stopPropagation)
+  modal.addEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-stop")
+    .addEventListener("click", stopPropagation);
 };
 
-const closeModal = function(e){
-  if (modal === null) return
-   if (e) e.preventDefault();
-  modal.style.display = "none"
-  modal.setAttribute("aria-hidden", true)
-  modal.removeAttribute("aria-modal")
-  modal.removeEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close").removeEventListener('click',closeModal)
-  modal.querySelector(".js-modal-stop").removeEventListener('click',stopPropagation)
-  modal = null
-}
+const closeModal = function (e) {
+  if (modal === null) return;
+  if (e) e.preventDefault();
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", true);
+  modal.removeAttribute("aria-modal");
+  modal.removeEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-close")
+    .removeEventListener("click", closeModal);
+  modal
+    .querySelector(".js-modal-stop")
+    .removeEventListener("click", stopPropagation);
+  modal = null;
+};
 
-const stopPropagation = function (e){
-  e.stopPropagation()
-}
+const stopPropagation = function (e) {
+  e.stopPropagation();
+};
 
 // fermer la modal avec esc :
 
-window.addEventListener("keydown", function(e){
-  if(e.key === "Escape" || e.key === "Esc"){
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.key === "Esc") {
     closeModal();
   }
 });
 
-
 // fonction image dans modal :
 
-    const modalGallery = document.querySelector(".modal-gallery");
+const modalGallery = document.querySelector(".modal-gallery");
 
-  function genererModalGallery(works){
-modalGallery.innerHTML = "";
-        for (let i= 0; i < works.length; i++) {
+function genererModalGallery(works) {
+  modalGallery.innerHTML = "";
+  for (let i = 0; i < works.length; i++) {
+    const work = works[i];
 
-        const work = works[i];
+    const figure = document.createElement("figure");
+    modalGallery.appendChild(figure);
 
-          const figure = document.createElement("figure")
-          modalGallery.appendChild(figure)
-
-          const trash = document.createElement("i");
+    const trash = document.createElement("i");
     trash.classList.add("fa-solid", "fa-trash-can", "trash-icon");
     trash.dataset.id = work.id; //
-trash.addEventListener("click", deleteWork); 
+    trash.addEventListener("click", deleteWork);
 
-          const imageElement = document.createElement("img");
-          imageElement.src = work.imageUrl; 
-          imageElement.alt = work.title;
-           figure.appendChild(imageElement);
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    imageElement.alt = work.title;
+    figure.appendChild(imageElement);
     figure.appendChild(trash);
-        }
-    }
+  }
+}
 // *************************************************************************************
 
 // SUPPRIMER WORKS dans la modal :
@@ -284,70 +340,67 @@ async function deleteWork(event) {
   const response = await fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (response.ok) {
     // supprimer du tableau works
-    works = works.filter(work => work.id != id);
+    works = works.filter((work) => work.id != id);
     // recharger la galerie principale
     genererWorks(works);
     // recharger la galerie modal
     genererModalGallery(works);
-
   } else {
     console.log("Erreur suppression");
   }
 }
 
-
-    // modal Partie 2 Ajout de Photo ********************************************************
+// modal Partie 2 Ajout de Photo ********************************************************
 const modalGallerySection = document.querySelector("#modal-gallery");
 const modalAddPhoto = document.querySelector("#modalAddPhoto");
 const addPicture = document.querySelector("#addPicture");
 const back = document.querySelector("#back");
 
 addPicture.addEventListener("click", async (e) => {
-  e.preventDefault(); //pas obligé car i ne fait pas daction 
+  e.preventDefault(); //pas obligé car i ne fait pas daction
   modalGallerySection.style.display = "none";
   modalAddPhoto.style.display = "block";
 
   await loadCategories();
 });
 
-back.addEventListener("click",(e)=>{
+back.addEventListener("click", (e) => {
   e.preventDefault();
-   modalGallerySection.style.display = "block";
+  modalGallerySection.style.display = "block";
   modalAddPhoto.style.display = "none";
-}
-);
+});
 
 // --- CHARGER LES CATÉGORIES DANS LE SELECT ---
 
 async function loadCategories() {
   const select = document.querySelector("#categorie");
-  select.innerHTML = ""; 
+  select.innerHTML = "";
 
-  // const response = await fetch(urlCategories); pas besoin car déja fait dans init 
-  // const categories = await response.json(); finalement jai fait une variable globale donc pas besoin 
+  // const response = await fetch(urlCategories); pas besoin car déja fait dans init
+  // const categories = await response.json(); finalement jai fait une variable globale donc pas besoin
 
-//   // Option vide qui sera sélectionnée par défaut
-// const emptyOption = document.createElement("option");
-// emptyOption.value = "";      // valeur vide
-// emptyOption.textContent = "-- Choisir une catégorie --"; 
-// emptyOption.selected = true; // sélectionnée par défaut
-// emptyOption.disabled = true; // option non sélectionnable après choix
-// select.appendChild(emptyOption);
+  //   // Option vide qui sera sélectionnée par défaut
+  // const emptyOption = document.createElement("option");
+  // emptyOption.value = "";      // valeur vide
+  // emptyOption.textContent = "-- Choisir une catégorie --";
+  // emptyOption.selected = true; // sélectionnée par défaut
+  // emptyOption.disabled = true; // option non sélectionnable après choix
+  // select.appendChild(emptyOption);
 
-  categories.forEach(categorie => {
+  categories.forEach((categorie) => {
     const option = document.createElement("option");
-    option.value = categorie.id; 
+    option.value = categorie.id;
     option.textContent = categorie.name;
     select.appendChild(option);
   });
 
-    //pour Sélectionner automatiquement la première catégorie, sseulement si créé en html si en js alors il le fait tout seul 
+  //pour Sélectionner automatiquement la première catégorie, sseulement si créé en html si en js alors il le fait tout seul
   // select.selectedIndex = 0;
 
   // ReValidate le formulaire après chargement des catégories
@@ -365,19 +418,18 @@ function validateForm() {
   const categorie = categorieSelect.value;
 
   const isValid = file && title && categorie;
-  if(isValid){
+  if (isValid) {
     btnValidate.style.backgroundColor = "#1D6154";
     btnValidate.style.borderColor = "#1D6154";
   } else {
-  btnValidate.style.backgroundColor = "#A7A7A7";
-  btnValidate.style.borderColor = "#A7A7A7";
+    btnValidate.style.backgroundColor = "#A7A7A7";
+    btnValidate.style.borderColor = "#A7A7A7";
   }
   return isValid;
 }
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---*******************************************************************
-                        // A revoir *********
-                        
+// A revoir *********
 
 const uploadZone = document.querySelector("#upload-zone");
 const inputFile = document.querySelector("#image");
@@ -396,15 +448,15 @@ inputFile.addEventListener("change", () => {
   const file = inputFile.files[0];
   //   Quand l’utilisateur choisit un fichier via ton <input type="file">, le navigateur stocke les fichiers sélectionnés dans une liste appelée inputFile.files.
   // inputFile.files → c’est une FileList, une sorte de tableau.
-// inputFile.files[0] → c’est le premier fichier choisi.
-// const file = … → tu récupères ce fichier dans une variable pour pouvoir l’utiliser.
+  // inputFile.files[0] → c’est le premier fichier choisi.
+  // const file = … → tu récupères ce fichier dans une variable pour pouvoir l’utiliser.
   if (!file) return;
 
-//   Le navigateur bloque l’accès direct aux fichiers locaux pour des raisons de sécurité.
-// Donc il te donne une fausse URL, mais qui pointe vers une copie du fichier en mémoire.
+  //   Le navigateur bloque l’accès direct aux fichiers locaux pour des raisons de sécurité.
+  // Donc il te donne une fausse URL, mais qui pointe vers une copie du fichier en mémoire.
   const url = URL.createObjectURL(file);
 
-                        // ******************
+  // ******************
 
   // Afficher la preview
   preview.src = url;
@@ -430,13 +482,12 @@ function hideFormError() {
 
 btnValidate.addEventListener("click", (e) => {
   e.preventDefault();
-  
+
   if (!validateForm()) {
     showFormError();
-  }
-  else{
+  } else {
     hideFormError();
-    sendNewWork(); 
+    sendNewWork();
   }
 });
 
@@ -444,21 +495,21 @@ btnValidate.addEventListener("click", (e) => {
 
 async function sendNewWork() {
   const token = localStorage.getItem("token");
-  
-  const formData = new FormData();   //la syntaxe pour fabriquer un objet basé sur une classe.
+
+  const formData = new FormData(); //la syntaxe pour fabriquer un objet basé sur une classe.
   formData.append("image", inputFile.files[0]);
   formData.append("title", titleInput.value);
   formData.append("category", categorieSelect.value);
-  // append() sert à ajouter un champ dans un objet 
-  
+  // append() sert à ajouter un champ dans un objet
+
   const response = await fetch(urlWorks, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
-    body: formData
+    body: formData,
   });
-  
+
   if (response.ok) {
     const newWork = await response.json();
 
@@ -471,7 +522,6 @@ async function sendNewWork() {
 
     closeModal();
     resetForm();
-
   } else {
     alert("Erreur lors de l’envoi du projet.");
   }
@@ -484,20 +534,18 @@ titleInput.addEventListener("input", validateForm);
 categorieSelect.addEventListener("change", validateForm);
 
 function resetForm() {
-  
   inputFile.value = "";
   preview.src = "";
   preview.style.display = "none";
 
-   uploadZone.querySelector("i").style.display = "block";
+  uploadZone.querySelector("i").style.display = "block";
   uploadZone.querySelector("button").style.display = "block";
   uploadZone.querySelector("p").style.display = "block";
 
-   titleInput.value = "";
+  titleInput.value = "";
 
-   btnValidate.style.backgroundColor = "#A7A7A7";
+  btnValidate.style.backgroundColor = "#A7A7A7";
   btnValidate.style.borderColor = "#A7A7A7";
 
-    hideFormError();
+  hideFormError();
 }
-
