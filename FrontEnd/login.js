@@ -13,7 +13,9 @@ function logInForm() {
       const response = await fetch(urlLogin, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // = ce que je tenvoi cest du json
         body: JSON.stringify({
+          // donc pour le trasnformer en json
           email: emailValue,
           password: passwordValue,
         }),

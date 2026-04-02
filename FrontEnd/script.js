@@ -333,26 +333,30 @@ function genererModalGallery(works) {
 // SUPPRIMER WORKS dans la modal :
 
 async function deleteWork(event) {
-  const id = event.target.dataset.id;
+  try {
+    const id = event.target.dataset.id;
 
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (response.ok) {
-    // supprimer du tableau works
-    works = works.filter((work) => work.id != id);
-    // recharger la galerie principale
-    genererWorks(works);
-    // recharger la galerie modal
-    genererModalGallery(works);
-  } else {
-    console.log("Erreur suppression");
+    if (response.ok) {
+      // supprimer du tableau works
+      works = works.filter((work) => work.id != id);
+      // recharger la galerie principale
+      genererWorks(works);
+      // recharger la galerie modal
+      genererModalGallery(works);
+    } else {
+      console.log("Erreur suppression");
+    }
+  } catch (error) {
+    console.error("Erreur réseau :", error);
   }
 }
 
@@ -429,7 +433,6 @@ function validateForm() {
 }
 
 // --- AJOUT PHOTO : INPUT FILE + PREVIEW ---*******************************************************************
-// A revoir *********
 
 const uploadZone = document.querySelector("#upload-zone");
 const inputFile = document.querySelector("#image");
@@ -494,36 +497,40 @@ btnValidate.addEventListener("click", (e) => {
 // --- send LE NOUVEAU PROJET À L’API ---
 
 async function sendNewWork() {
-  const token = localStorage.getItem("token");
+  try {
+    const token = localStorage.getItem("token");
 
-  const formData = new FormData(); //la syntaxe pour fabriquer un objet basé sur une classe.
-  formData.append("image", inputFile.files[0]);
-  formData.append("title", titleInput.value);
-  formData.append("category", categorieSelect.value);
-  // append() sert à ajouter un champ dans un objet
+    const formData = new FormData(); //la syntaxe pour fabriquer un objet basé sur une classe.
+    formData.append("image", inputFile.files[0]);
+    formData.append("title", titleInput.value);
+    formData.append("category", categorieSelect.value);
+    // append() sert à ajouter un champ dans un objet
 
-  const response = await fetch(urlWorks, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
+    const response = await fetch(urlWorks, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
 
-  if (response.ok) {
-    const newWork = await response.json();
+    if (response.ok) {
+      const newWork = await response.json();
 
-    // Ajouter dans ton tableau works
-    works.push(newWork);
+      // Ajouter dans ton tableau works
+      works.push(newWork);
 
-    // Rafraîchir les galeries
-    genererWorks(works);
-    genererModalGallery(works);
+      // Rafraîchir les galeries
+      genererWorks(works);
+      genererModalGallery(works);
 
-    closeModal();
-    resetForm();
-  } else {
-    alert("Erreur lors de l’envoi du projet.");
+      closeModal();
+      resetForm();
+    } else {
+      alert("Erreur lors de l’envoi du projet.");
+    }
+  } catch (error) {
+    console.error("Erreur réseau :", error);
   }
 }
 

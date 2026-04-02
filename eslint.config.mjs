@@ -12,7 +12,7 @@ export default defineConfig([
     },
   },
 
-  // 👉 Configuration spéciale pour ton backend Node.js
+  //  Configuration spéciale pour le backend Node.js
   {
     files: ["Backend/**/*.js"],
     languageOptions: {
