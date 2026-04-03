@@ -23,19 +23,12 @@
   </head>
   <body>
     <header id="header-index">
-      <!-- <section id="edit-banner">
-        <!- <p><i class="fa-solid fa-pen-to-square"></i></p>
-        <p>Mode édition</p> -->
-      <!-- </section> -> -->
-
       <section id="title">
         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
         <nav>
           <ul>
-            <!-- je connecte a mes projets :  -->
             <li><a href="#portfolio">projets</a></li>
             <li><a href="#contact">contact</a></li>
-            <!-- je connecte ma page login :  -->
             <li><a href="./login.html" id="logbold">login</a></li>
             <li>
               <a href="https://instagram.com" target="_blank"
@@ -75,10 +68,6 @@
       </div>
       <section id="portfolio">
         <h2>Mes Projets</h2>
-
-        <!-- modal  -->
-
-        <!-- <a href="#modal1" class="js-modal">Modifier la modal</a> -->
         <aside
           id="modal1"
           class="modal"
@@ -88,26 +77,19 @@
         >
           <div class="modal-wrapper js-modal-stop">
             <button class="js-modal-close">X</button>
-
-            <!-- SECTION GALERIE -->
             <section id="modal-gallery">
               <h3 id="titlemodal" class="titlemodal">Galerie photo</h3>
               <div class="modal-gallery"></div>
               <div class="trait"></div>
               <button id="addPicture">Ajouter une photo</button>
             </section>
-
-            <!-- SECTION AJOUT PHOTO -->
             <section id="modalAddPhoto" style="display: none">
               <i class="fa-solid fa-arrow-left" id="back"></i>
-              <!-- <button class="js-modal-close">X</button> -->
               <h3 class="titlemodal">Ajout Photo</h3>
-
               <div id="upload-zone">
                 <i class="fa-regular fa-image"></i>
                 <button id="btn-add-photo">+ Ajouter photo</button>
                 <p>jpg, png : 4mo max</p>
-
                 <input
                   type="file"
                   id="image"
@@ -121,19 +103,11 @@
                   style="display: none"
                 />
               </div>
-
               <form action="#">
                 <label for="title-photo">title</label>
                 <input type="text" id="title-photo" />
                 <label for="categorie">Catégorie</label>
-                <select id="categorie">
-                  <!-- <option value="Hotels & restaurants">
-                    Hotels & restaurants
-                  </option>
-                  <option value="Objets">Objets</option>
-                  <option value="Appartements">Appartements</option> -->
-                </select>
-
+                <select id="categorie"></select>
                 <div class="trait"></div>
                 <p id="form-error" style="color: red; display: none">
                   Veuillez remplir tous les champs.
@@ -143,89 +117,8 @@
             </section>
           </div>
         </aside>
-
-        <div class="buttons">
-          <!-- <button id="tous">Tous</button>
-          <button id="objets">Objets</button>
-          <button id="appartements">Appartements</button>
-          <button id="hotelsrest">Hotels & restaurants</button> -->
-        </div>
-        <div class="gallery">
-          <!-- <figure>
-            <img src="assets/images/abajour-tahina.png" alt="Abajour Tahina" />
-            <figcaption>Abajour Tahina</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/appartement-paris-v.png"
-              alt="Appartement Paris V"
-            />
-            <figcaption>Appartement Paris V</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/restaurant-sushisen-londres.png"
-              alt="Restaurant Sushisen - Londres"
-            />
-            <figcaption>Restaurant Sushisen - Londres</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/la-balisiere.png"
-              alt="Villa “La Balisiere” - Port Louis"
-            />
-            <figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/structures-thermopolis.png"
-              alt="Structures Thermopolis"
-            />
-            <figcaption>Structures Thermopolis</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/appartement-paris-x.png"
-              alt="Appartement Paris X"
-            />
-            <figcaption>Appartement Paris X</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/le-coteau-cassis.png"
-              alt="Pavillon “Le coteau” - Cassis"
-            />
-            <figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/villa-ferneze.png"
-              alt="Villa Ferneze - Isola d’Elba"
-            />
-            <figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/appartement-paris-xviii.png"
-              alt="Appartement Paris XVIII"
-            />
-            <figcaption>Appartement Paris XVIII</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/bar-lullaby-paris.png"
-              alt="Bar “Lullaby” - Paris"
-            />
-            <figcaption>Bar “Lullaby” - Paris</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="assets/images/hotel-first-arte-new-delhi.png"
-              alt="Hotel First Arte - New Delhi"
-            />
-            <figcaption>Hotel First Arte - New Delhi</figcaption>
-          </figure> -->
-        </div>
+        <div class="buttons"></div>
+        <div class="gallery"></div>
       </section>
       <section id="contact">
         <h2>Contact</h2>

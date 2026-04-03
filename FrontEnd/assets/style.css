@@ -20,18 +20,14 @@ time, mark, audio, video, option, select{
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	/* pour dire que l'elément à la meme police que son parent :  */
 	font: inherit;
-	/* pour que l'élement s’aligne correctement avec le texte :  */
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	/* un espacement neutre entre les lignes, 1.5 pour augmenter l'espace  */
 	line-height: 1;
 	background-color: #FFFEF8;
 }
@@ -40,20 +36,14 @@ ol, ul, a {
 	color: black;
 	text-decoration: none;
 }
-/* Supprime les guillemets automatiques.  */
 blockquote, q {
 	quotes: none;
 }
-
-/* Supprime tout contenu ajouté automatiquement autour des citations. */
-
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
-
-/* Supprime les espaces et fusionne les bordures dans les tableaux. */
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -70,19 +60,15 @@ header {
 	justify-content: space-between;
 	margin: 50px 0;
 }
-
-/* seulement le header de index.html  */
 #header-index{
 display: block;
 }
-
 section {
 	margin: 50px 0;
 }
 #portfolio{
 	margin: 100px 0;
 }
-
 h1{
 	display: flex;
 	flex-direction: column;
@@ -91,15 +77,11 @@ h1{
 	font-weight: 800;
 	color: #B1663C
 }
-/* cible seulement les <span> qui sont directement à l’intérieur d’un <h1>. Le > signifie enfant direct.
- */
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
-	/* espace entre les lettres  */
 	letter-spacing: 0.1em;
 }
-
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -109,13 +91,11 @@ h2{
 nav ul {
 	display: flex;
 	align-items: center;
-	/* list-style-type: none; doublon  */
 }
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
-
 li a:hover {
 	color: #B1663C;
 }
@@ -125,30 +105,21 @@ li a:hover {
 }
 #introduction figure {
 	flex: 1;
-	/* flex: 1 : indique que cet élément doit prendre tout l’espace disponible dans son conteneur flex. */
 }
 #introduction img {
-/* Par défaut, les <img> sont des éléments inline (comme <span>).
-display: block transforme l’image en élément bloc, ce qui permet :
-de gérer facilement la largeur (width) */
 	display: block;
 	margin: auto;
 	width: 80%;
 }
-
 #introduction article {
 	flex: 1
 }
 #introduction h2 {
 	margin-bottom: 1em;
 }
-
 #introduction p {
 	margin-bottom: 0.5em;
 }
-
-/* Ajout css bouttons :  */
-
 #portfolio .buttons{
 	display: flex;
 	flex-wrap: wrap;
@@ -157,11 +128,6 @@ de gérer facilement la largeur (width) */
 	height: 38px;
 	padding: 40px 0;
 }
-/* #portfolio .buttons #tous{
-	background-color: #1D6154;
-	color: white;
-} */
-
 #portfolio .buttons button{
 	cursor: pointer;
 	font-family: 'Syne';
@@ -173,11 +139,8 @@ de gérer facilement la largeur (width) */
 	border-radius: 60px ;
 	padding: 10px;
 }
-
-
 #portfolio h2 {
 	text-align: center;
-	/* margin-bottom: 1em; */
 }
 .gallery {
 	width: 100%;
@@ -187,7 +150,6 @@ de gérer facilement la largeur (width) */
 	grid-row-gap: 20px;
 	margin-top: 30px;
 }
-
 .gallery img {
 	width: 100%;
 height: 457px;
@@ -196,10 +158,8 @@ height: 457px;
 	width: 50%;
 	margin: auto;
 }
-
 #contact,
 #login > * {
-	/* tous les enfants directs de l’élément avec id="login" auront le texte centré. */
 	text-align: center;
 }
 #contact h2{
@@ -211,8 +171,6 @@ form {
 	display: flex;
 	flex-direction: column;
 }
-
-/* CSS LOGIN */
 #login{
 	padding-top: 100px;
 	width: 379px;
@@ -223,8 +181,6 @@ form {
 	display: flex;
 	justify-content: center;
 }
-
-/* INPUT  */
 input,
 select {
 	height: 50px;
@@ -241,9 +197,7 @@ label {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
  	resize: none;
-	/* pour eviter dagrandir la zone  */
 }
-
 input[type="submit"],
 button[type="submit"],
 #addPicture{
@@ -259,27 +213,19 @@ button[type="submit"],
 	border: 2px solid #1D6154;
 	cursor: pointer;
 }
-
-/* FOOTER  */
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
-
-/* Ajout message d'erreur sur login.html:  */
 .error-message {
   color: red;
   margin-top: 20px;
   font-weight: bold;
 }
-
 #forgot{
 	text-decoration: underline;
 }
-
-/* Style mode édition :  */
-
 #title{
 	display: flex;
 	flex-wrap: wrap;
@@ -300,21 +246,13 @@ footer nav ul {
     width: 100%; 
     margin: 0;
 }
-/* class ajoutée via js pour espacer bandeau et title  */
 .bandeau{
 	margin-top: 100px;
 }
-
 #edit{
-	/* style via JS  */
 	display: flex;
 	gap: 5px;
 }
-
-/* /* modal partie 1 * */
-
-/* transition : */
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -323,36 +261,32 @@ footer nav ul {
   from { transform: translateY(-50px); }
   to { transform: translateY(0); }
 }
-
 .modal {
   display: flex;
   justify-content: center;        
   align-items: center;            
   position: fixed;
   top: 0;
-  left: 0;                        /* nécessaire pour couvrir tout l'écran */
-  width: 100vw;                    /* toute la largeur de l'écran meme si le parent na pas de w definit  on utilise % quand le parent a une largeur definie, 100vh = 100% */
-  height: 100vh;                   /* toute la hauteur de l'écran */
+  left: 0;                        
+  width: 100vw;                 
+  height: 100vh;                 
   background: rgba(0, 0, 0, 0.8); 
-  z-index: 1000;                   /* au-dessus du reste */
-  animation: fadeIn 0.3s both; /* appliquer les animations */
+  z-index: 1000;                  
+  animation: fadeIn 0.3s both; 
 }
-
 .modal-wrapper {
-  position: relative;              /* pour mon bouton X */
+  position: relative;            
   background-color: #fff;
   width: 635px;                    
   height: 670px;                   
-  max-width: calc(100vw - 40px);    /* ne dépasse pas l'écran (padding 20px de chaque côté) */
-  max-height: calc(100vh - 40px);   /* ne dépasse pas l'écran */                    */
+  max-width: calc(100vw - 40px);    
+  max-height: calc(100vh - 40px);  
   overflow-y: auto;
-overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DESCENDRE*/
+overflow-x: hidden;              
   border-radius: 10px 10px;              
-  box-sizing: border-box;           /* padding inclus dans width/height */
-  animation: slideFromTop 0.5s both; /* appliquer les animations */
+  box-sizing: border-box;           
+  animation: slideFromTop 0.5s both; 
 }
-
-/* croix pour fermer  */
 .js-modal-close{
 	border: none;
 	font-size: 18px;
@@ -367,7 +301,6 @@ overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DES
   width: 100%;
   font-size: 1.5em;
 }
-/* Icône poubelle OK */
 .trash-icon {
 	position: absolute;
 	top: 5px;
@@ -387,8 +320,6 @@ overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DES
   padding-bottom: 0;
   width: 78%;
 }
-
-/* photos modal OK  */
 .modal-gallery figure {
   width: 76.86px;
   height: 102.57px;
@@ -396,35 +327,27 @@ overflow-x: hidden;              /* scroll si contenu trop grand  BARRE POUR DES
   overflow: hidden;
   margin: 0;
 }
-
 .modal-gallery img {
    width: 76.86px;
   height: 102.57px;
   object-fit: cover;
 }
-
-/* le trait : */
 .trait {
     height: 1px;
     width: 75%;
     margin: 30px auto; 
     background-color: #B3B3B3;
 }
-/* Centrer le bouton Ajouter une photo */
 #addPicture,
 #btn-Validate{
   display: block; 
 }
-
-/* modal partie 2 */
-
 #modalAddPhoto{
 	margin: 0;
 }
 #modalAddPhoto h3{
 margin: 30px auto;
 }
-
 #back{
 	border: none;
 	font-size: 18px;
@@ -434,7 +357,6 @@ margin: 30px auto;
 	background-color: #fff;
 	cursor: pointer;
 }
-
 #upload-zone{
 	display: flex;
 	flex-direction: column;
@@ -446,7 +368,6 @@ margin: 30px auto;
 	padding: 14px;
 	position: relative;
 }
-
 #btn-add-photo{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -464,7 +385,6 @@ margin: 30px auto;
 	color: #B9C5CC;
 	font-size: 76px;
 }
-
 #modalAddPhoto form{
 	width: 75%;
 	margin: 0 auto;
@@ -472,8 +392,6 @@ margin: 30px auto;
 select{
 	font-size: 14px;
 }
-/* style de la preview  */ 
- 
 #preview {
   width: 100%;
   height: 100%;
@@ -482,7 +400,6 @@ select{
 	top: 0;
 	left: 0;
 }
-
 #btn-Validate{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -496,9 +413,6 @@ select{
 	border: 2px solid #A7A7A7;
 	cursor: pointer;
 }
-
-/* RESPONSIVE ****************************** */
-
 @media (max-width: 630px) {
 .gallery img {
 	width: 100%;
